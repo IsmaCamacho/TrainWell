@@ -54,7 +54,9 @@ fun login(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(40.dp),
+            .padding(top= 250.dp)
+            .padding(start = 20.dp)
+            .padding(end = 20.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -146,7 +148,6 @@ fun login(
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
