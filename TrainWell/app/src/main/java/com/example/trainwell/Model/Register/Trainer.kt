@@ -1,4 +1,4 @@
-package com.example.trainwell.Model.Login
+package com.example.trainwell.Model.Register
 
 data class Trainer(
     val userId:String,

@@ -12,12 +12,14 @@ import com.example.trainwell.Screen.Register.ClientForm
 import com.example.trainwell.Screen.Register.Register
 import com.example.trainwell.Screen.Register.TrainerForm
 import com.example.trainwell.ViewModel.Login.LoginViewModel
+import com.example.trainwell.ViewModel.Register.RegisterViewModel
 import com.example.trainwell.ui.theme.TrainWellTheme
 
 class MainActivity : ComponentActivity() {
 
 //    val auth = Firebase.auth
     val lvm = LoginViewModel()
+    val rvm = RegisterViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +35,7 @@ class MainActivity : ComponentActivity() {
                         Register(navController)
                     }
                     composable(Routes.clientRegister) {
-                        ClientForm(navController)
+                        ClientForm(navController,rvm)
                     }
                     composable(Routes.trainerRegister) {
                         TrainerForm(navController)
