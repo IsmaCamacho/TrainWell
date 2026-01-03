@@ -64,7 +64,7 @@ fun Login(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top= 250.dp)
+            .padding(top= 50.dp)
             .padding(start = 20.dp)
             .padding(end = 20.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),

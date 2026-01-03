@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TrainWellTheme {
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = Routes.login){
+                NavHost(navController = navController, startDestination = Routes.register){
                     composable(Routes.login){
                         Login(navController, lvm)
                     }
