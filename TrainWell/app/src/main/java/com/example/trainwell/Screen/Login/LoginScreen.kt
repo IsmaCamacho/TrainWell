@@ -19,7 +19,9 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -37,10 +39,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.trainwell.Model.Login.Login
 import com.example.trainwell.R
+import com.example.trainwell.Routes
 import com.example.trainwell.ViewModel.Login.LoginViewModel
 
 @Composable
-fun login(
+fun Login(
     navController: NavHostController,
     viewModel: LoginViewModel
 ){
@@ -49,7 +52,14 @@ fun login(
     var passwd by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
     var passwdError by remember { mutableStateOf(false) }
+    val existe by viewModel.usuarioExiste.observeAsState()
     val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(existe) {
+        if (existe == true) {
+            navController.navigate(Routes.register)
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -62,7 +72,7 @@ fun login(
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "LOGIN",
+            text = "LOG IN",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -107,6 +117,14 @@ fun login(
                 style = MaterialTheme.typography.bodySmall
             )
         }
+        //si no existe, texto de que se ha equivocado en el login
+        if (existe==false) {
+            Text(
+                text = "Email o contraseña incorrectos",
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(top = 12.dp)
+            )
+        }
 
         //Botón para enviar
         Button(
@@ -114,8 +132,6 @@ fun login(
                 if (email.isNotBlank() && passwd.isNotBlank()) {
                     var user = Login(email, passwd)
                     viewModel.getUser(user)  //llamamos al viewmodel y le pasamos el usuario
-                    email = ""
-                    passwd = ""
                     emailError = false
                     passwdError = false
                     focusRequester.requestFocus() //Devuelve el foco a la caja de texto nombre.
@@ -127,7 +143,7 @@ fun login(
             modifier = Modifier.fillMaxWidth(),
             enabled = email.isNotBlank() && passwd.isNotBlank()
         ) {
-            Text("Login")
+            Text("Log in")
         }
 
         Spacer(modifier = Modifier.padding(10.dp))
@@ -156,11 +172,13 @@ fun login(
                 style = MaterialTheme.typography.labelMedium.copy(color = Color(0xFF64748B)),
             )
             TextButton(
-                onClick = {} //irse al formulario de registro
+                onClick = {
+                    navController.navigate(Routes.register) //irse al formulario de registro
+                }
             ) {
                 Text(
                     text = "Create now",
-                    style = MaterialTheme.typography.labelMedium.copy(
+                    style = MaterialTheme.typography.labelLarge.copy(
                         color = Color(0xFF64748B),
                         fontWeight = FontWeight.Bold)
                 )

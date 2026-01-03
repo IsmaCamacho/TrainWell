@@ -1,6 +1,7 @@
 package com.example.trainwell.ViewModel.Login
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.trainwell.Collections
@@ -16,6 +17,7 @@ class LoginViewModel: ViewModel(){
 
     val db = Firebase.firestore
     private val _usuarioExiste = MutableLiveData<Boolean>()
+    val usuarioExiste: LiveData<Boolean> get() = _usuarioExiste
 
     fun getUser(userLogin: Login) = viewModelScope.launch {
         try {
@@ -27,11 +29,13 @@ class LoginViewModel: ViewModel(){
 
             //si devuelve un usuario es porque existe
             if(!result.isEmpty){
+                Log.d("Ismael", "Usuario encontrado. ID: ${result.documents.first().id}")
                 _usuarioExiste.value=true
                 //guardo en el object los datos que voy a utilizar despues
                 Data.idUser = result.documents.first().id  //quiero el documento para al agregar la nota saber de quien es el id del user
                 Data.emailUser = userLogin.email
             }else{
+                Log.d("Ismael", "FALLO: No coincide email o contraseña.")
                 _usuarioExiste.value=false
             }
 
