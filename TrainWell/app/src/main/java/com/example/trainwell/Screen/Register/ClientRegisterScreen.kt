@@ -224,7 +224,7 @@ fun ClientForm(
                     // Añadimos el usuario general con su cliente
                     var user = User(name = name, email = email, passwd = passwd, role = "C", dateRegister = LocalDateTime.now().toString())
                     var customer = Customer(goal = goal, weight = weight.toDouble(), height = height.toInt())
-                    viewModel.addUser(user,customer)
+                    viewModel.addUserCustomer(user,customer)
 
                     emailError = false
                     passwdError = false

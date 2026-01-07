@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                         ClientForm(navController,rvm)
                     }
                     composable(Routes.trainerRegister) {
-                        TrainerForm(navController)
+                        TrainerForm(navController,rvm)
                     }
                 }
             }
