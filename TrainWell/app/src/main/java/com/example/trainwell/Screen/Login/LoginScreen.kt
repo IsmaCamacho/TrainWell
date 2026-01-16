@@ -64,7 +64,7 @@ fun Login(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top= 250.dp)
+            .padding(top= 50.dp)
             .padding(start = 20.dp)
             .padding(end = 20.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -77,7 +77,7 @@ fun Login(
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        //Campo para el nombre
+        //Campo para el EMAIL
         OutlinedTextField(
             value = email,
             onValueChange = {
@@ -91,7 +91,7 @@ fun Login(
         )
         if (emailError) {
             Text(
-                text = "El email no puede estar vacío",
+                text = "Email cannot be empty",
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall
             )
@@ -112,7 +112,7 @@ fun Login(
         )
         if (passwdError) {
             Text(
-                text = "La contraseña no puede estar vacía",
+                text = "Password cannot be empty",
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall
             )
@@ -120,7 +120,7 @@ fun Login(
         //si no existe, texto de que se ha equivocado en el login
         if (existe==false) {
             Text(
-                text = "Email o contraseña incorrectos",
+                text = "Incorrect email or password",
                 color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.padding(top = 12.dp)
             )
