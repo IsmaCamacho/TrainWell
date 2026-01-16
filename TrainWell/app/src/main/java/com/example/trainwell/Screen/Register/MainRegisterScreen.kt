@@ -1,10 +1,13 @@
 package com.example.trainwell.Screen.Register
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +19,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,90 +34,113 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.trainwell.R
 import com.example.trainwell.Routes
 
+@SuppressLint("ResourceAsColor") //se ha añadido al agregar el color al boton
 @Composable
 fun Register(
     navController: NavHostController
 ) {
     var role by remember { mutableStateOf("") }
 
-    Column(
+    //tod dentro de un box para que ocupe la pantalla entera
+    Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 250.dp)
-            .padding(start = 20.dp)
-            .padding(end = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "Welcome to Trainwell")
-        Spacer(modifier = Modifier.size(8.dp))
-        Text(text = "To start personalizing your experience, tell us who you are:")
-        Spacer(modifier = Modifier.size(15.dp))
-        // Cuando el usuario pulsa en la tarjeta, la variable role pasa a ser "C", se recompone,
-        // por lo que isSelected detecta que role == "C" y se cambia el borde y entra dentro de la función.
-        ClientCard(isSelected = role == "C") {
-            role = "C"
-            Log.e("sergio", "El role es: $role")
-        }
-        TrainerCard(isSelected = role == "E") {
-            role = "E"
-            Log.e("sergio", "El role es: $role")
-        }
-        Spacer(modifier = Modifier.size(20.dp))
-        Row {
-            Button(onClick = {
-                when (role) {
-                    "C" -> {
-                        Log.e("sergio", "en el boton continue, has pulsado en client")
-                        navController.navigate(Routes.clientRegister)
-                    }
-                    "E" -> {
-                        Log.e("sergio", "en el boton continue, has pulsado en entrenador")
-                        navController.navigate(Routes.trainerRegister)
-                    }
-                    else -> Log.e("sergio", "no has pulsao na")
-                }
-            }) {
-                Text(text = "Continue")
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                    contentDescription = "Arrow"
-                )
-            }
-
-        }
-        Spacer(modifier = Modifier.size(10.dp))
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Do you already have an account?",
-                style = MaterialTheme.typography.labelMedium.copy(color = Color(0xFF64748B)),
-            )
-            TextButton(
-                onClick = {
-                    navController.navigate(Routes.login) //irse al formulario de registro
-                }
-            ) {
-                Text(
-                    text = "Log in",
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        color = Color(0xFF64748B),
-                        fontWeight = FontWeight.Bold
+            .fillMaxSize()
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        colorResource(id = R.color.greenBG2), //verde mas clarito
+                        colorResource(id = R.color.greenBG) // verde mas oscuro
                     )
                 )
+            )
+    ){
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 250.dp)
+                .padding(start = 20.dp)
+                .padding(end = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Welcome to ", color = Color.White, fontSize = 30.sp)
+            Text(text = "TrainWell", color = colorResource(id=R.color.greenBT), fontSize = 30.sp)
+            Spacer(modifier = Modifier.size(8.dp))
+            Text(text = "To start personalizing your experience" , color = colorResource(id=R.color.greyTXT))
+            Text(text = "tell us who you are:" , color = colorResource(id=R.color.greyTXT))
+            Spacer(modifier = Modifier.size(15.dp))
+            // Cuando el usuario pulsa en la tarjeta, la variable role pasa a ser "C", se recompone,
+            // por lo que isSelected detecta que role == "C" y se cambia el borde y entra dentro de la función.
+            ClientCard(isSelected = role == "C") {
+                role = "C"
+                Log.e("sergio", "El role es: $role")
+            }
+            TrainerCard(isSelected = role == "E") {
+                role = "E"
+                Log.e("sergio", "El role es: $role")
+            }
+            Spacer(modifier = Modifier.size(20.dp))
+            Row {
+                ElevatedButton(onClick = {  //elevated button visto en la pagina de jetpack compose
+                    when (role) {
+                        "C" -> {
+                            Log.e("sergio", "en el boton continue, has pulsado en client")
+                            navController.navigate(Routes.clientRegister)
+                        }
+                        "E" -> {
+                            Log.e("sergio", "en el boton continue, has pulsado en entrenador")
+                            navController.navigate(Routes.trainerRegister)
+                        }
+                        else -> Log.e("sergio", "no has pulsao na")
+                    }
+                },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton
+                        contentColor = Color.Black)
+                ) {
+                    Text(text = "Continue")
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = "Arrow"
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.size(10.dp))
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Do you already have an account?", color = colorResource(id=R.color.greyTXT),
+                    style = MaterialTheme.typography.labelMedium.copy(color = Color(0xFF64748B)),
+                )
+                TextButton(
+                    onClick = {
+                        navController.navigate(Routes.login) //irse al formulario de registro
+                    }
+                ) {
+                    Text(
+                        text = "Log in", color = colorResource(id=R.color.greenBT),
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            color = Color(0xFF64748B),
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                }
             }
         }
     }
-
 }
 
 @Composable
