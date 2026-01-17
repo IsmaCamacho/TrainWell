@@ -69,6 +69,10 @@ fun Register(
                 )
             )
     ){
+//        Image(
+//            painter = painterResource(id = R.drawable.ic_mainimage),
+//            contentDescription = "Main Image"
+//        )
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -78,10 +82,6 @@ fun Register(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-//            Image(
-//                painter = painterResource(id = R.drawable.ic_mainimage),
-//                contentDescription = "Main Image"
-//            )
             Text(text = "Welcome to ", color = Color.White, fontSize = 30.sp)
             Text(text = "TrainWell", color = colorResource(id=R.color.greenBT), fontSize = 30.sp)
             Spacer(modifier = Modifier.size(8.dp))
@@ -158,10 +158,10 @@ fun ClientCard(isSelected:Boolean, onClick: () -> Unit) {
         colors = CardDefaults.cardColors(
             containerColor = colorResource(R.color.greenCard)
         ),
-        border = BorderStroke(2.dp, if (isSelected) Color.Blue else Color.Green),
+        border = if (isSelected) BorderStroke(2.dp, colorResource(id = R.color.greenBT)) else null,
         modifier = Modifier
             .fillMaxWidth()
-            .height(80.dp)
+            .height(120.dp)
             .combinedClickable(
                 onClick = {
                     onClick()
@@ -171,14 +171,36 @@ fun ClientCard(isSelected:Boolean, onClick: () -> Unit) {
             .padding(5.dp)
     )
     {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(4.dp),
-            verticalArrangement = Arrangement.SpaceBetween
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "I'm client", fontSize = 20.sp, color = Color.White)
-            Text(text = "I'm looking for personalized training and nutrition plans", color = colorResource(id=R.color.greyTXT), fontSize = 13.sp)
+            Image(
+                painter = painterResource(id = R.drawable.ic_customer),
+                contentDescription = null,
+            )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(4.dp),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "I'm client", fontSize = 18.sp, color = Color.White, fontWeight = FontWeight.Bold)
+                Text(
+                    text = "I'm looking for personalized training and nutrition plans",
+                    color = colorResource(id = R.color.greyTXT),
+                    fontSize = 13.sp
+                )
+            }
+//            //Icono de Check circular (igual que una imagen pero se pone como icono)
+//            Icon(
+//                painter = painterResource(id = if (isSelected) R.drawable.ic_check_sin else R.drawable.ic_check_con),
+//                contentDescription = null,
+//                tint = if (isSelected) colorResource(id = R.color.greenBT) else Color.Gray,
+//                modifier = Modifier.size(20.dp)
+//            )
         }
     }
 
@@ -191,11 +213,10 @@ fun TrainerCard(isSelected:Boolean,onClick: () -> Unit) {
         colors = CardDefaults.cardColors(
             containerColor = colorResource(R.color.greenCard)
         ),
-        border = BorderStroke(2.dp, if (isSelected) Color.Blue else Color.Green),
+        border = if (isSelected) BorderStroke(2.dp, colorResource(id = R.color.greenBT)) else null,
         modifier = Modifier
-
             .fillMaxWidth()
-            .height(80.dp)
+            .height(120.dp)
             .combinedClickable(
                 onClick = {
                     onClick()
@@ -205,14 +226,37 @@ fun TrainerCard(isSelected:Boolean,onClick: () -> Unit) {
             .padding(5.dp)
     )
     {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(4.dp),
-            verticalArrangement = Arrangement.SpaceBetween
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "I'm trainer", fontSize = 20.sp, color = Color.White)
-            Text(text = "I am a professional and I want to offer my services.", color = colorResource(id=R.color.greyTXT), fontSize = 13.sp)
+            Image(
+                painter = painterResource(id = R.drawable.ic_trainer),
+                contentDescription = null
+            )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(4.dp),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row {  }
+                Text(text = "I'm trainer", fontSize = 20.sp, color = Color.White,  fontWeight = FontWeight.Bold)
+                Text(
+                    text = "I am a professional and I want to offer my services.",
+                    color = colorResource(id = R.color.greyTXT),
+                    fontSize = 13.sp
+                )
+            }
+//            //Icono de Check circular (igual que una imagen pero se pone como icono)
+//            Icon(
+//                painter = painterResource(id = if (isSelected) R.drawable.ic_check_sin else R.drawable.ic_check_con),
+//                contentDescription = null,
+//                tint = if (isSelected) colorResource(id = R.color.greenBT) else Color.Gray,
+//                modifier = Modifier.size(20.dp)
+//            )
         }
     }
 }
