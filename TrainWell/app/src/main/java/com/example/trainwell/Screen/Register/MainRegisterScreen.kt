@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +22,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -38,6 +40,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -74,6 +78,10 @@ fun Register(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+//            Image(
+//                painter = painterResource(id = R.drawable.ic_mainimage),
+//                contentDescription = "Main Image"
+//            )
             Text(text = "Welcome to ", color = Color.White, fontSize = 30.sp)
             Text(text = "TrainWell", color = colorResource(id=R.color.greenBT), fontSize = 30.sp)
             Spacer(modifier = Modifier.size(8.dp))
@@ -147,6 +155,9 @@ fun Register(
 fun ClientCard(isSelected:Boolean, onClick: () -> Unit) {
     var context = LocalContext.current
     Card(
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(R.color.greenCard)
+        ),
         border = BorderStroke(2.dp, if (isSelected) Color.Blue else Color.Green),
         modifier = Modifier
             .fillMaxWidth()
@@ -158,7 +169,6 @@ fun ClientCard(isSelected:Boolean, onClick: () -> Unit) {
                 }
             )
             .padding(5.dp)
-
     )
     {
         Column(
@@ -167,10 +177,8 @@ fun ClientCard(isSelected:Boolean, onClick: () -> Unit) {
                 .padding(4.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(
-                text = "I'm client"
-            )
-
+            Text(text = "I'm client", fontSize = 20.sp, color = Color.White)
+            Text(text = "I'm looking for personalized training and nutrition plans", color = colorResource(id=R.color.greyTXT), fontSize = 13.sp)
         }
     }
 
@@ -180,6 +188,9 @@ fun ClientCard(isSelected:Boolean, onClick: () -> Unit) {
 fun TrainerCard(isSelected:Boolean,onClick: () -> Unit) {
     var context = LocalContext.current
     Card(
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(R.color.greenCard)
+        ),
         border = BorderStroke(2.dp, if (isSelected) Color.Blue else Color.Green),
         modifier = Modifier
 
@@ -200,10 +211,8 @@ fun TrainerCard(isSelected:Boolean,onClick: () -> Unit) {
                 .padding(4.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(
-                text = "I'm trainer"
-            )
-
+            Text(text = "I'm trainer", fontSize = 20.sp, color = Color.White)
+            Text(text = "I am a professional and I want to offer my services.", color = colorResource(id=R.color.greyTXT), fontSize = 13.sp)
         }
     }
 }
