@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
@@ -36,8 +37,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -69,10 +75,30 @@ fun Register(
                 )
             )
     ){
-//        Image(
-//            painter = painterResource(id = R.drawable.ic_mainimage),
-//            contentDescription = "Main Image"
-//        )
+        Image(
+            painter = painterResource(id = R.drawable.ic_mainimage),
+            contentDescription = "Main Image",
+            contentScale = ContentScale.FillHeight,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(450.dp) // Ajusta según tu diseño
+                .graphicsLayer { alpha = 0.99f }
+                .drawWithContent {
+                    drawContent()
+                    drawRect(
+                        brush = Brush.verticalGradient(
+                            // INVERTIMOS: Sólido arriba (Blanco/Negro) y Transparente abajo
+                            colors = listOf(
+                                Color.Black,       // Parte superior (se ve la imagen)
+                                Color.Transparent  // Parte inferior (se difumina)
+                            ),
+                            startY = size.height * 0.5f, // Empezamos a difuminar a la mitad
+                            endY = size.height           // Terminamos en el borde inferior
+                        ),
+                        blendMode = BlendMode.DstIn // Aplica la transparencia del brush a la imagen
+                    )
+                }
+        )
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -178,16 +204,18 @@ fun ClientCard(isSelected:Boolean, onClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_customer),
+                painter = painterResource(id = R.drawable.ic_client),
                 contentDescription = null,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(5.dp))
             )
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(4.dp),
+                    .padding(10.dp),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "I'm client", fontSize = 18.sp, color = Color.White, fontWeight = FontWeight.Bold)
+                Text(text = "I'm a Client", fontSize = 20.sp, color = Color.White,  fontWeight = FontWeight.Bold)
                 Text(
                     text = "I'm looking for personalized training and nutrition plans",
                     color = colorResource(id = R.color.greyTXT),
@@ -234,16 +262,17 @@ fun TrainerCard(isSelected:Boolean,onClick: () -> Unit) {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_trainer),
-                contentDescription = null
+                contentDescription = null,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(5.dp))
             )
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(4.dp),
+                    .padding(10.dp),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Row {  }
-                Text(text = "I'm trainer", fontSize = 20.sp, color = Color.White,  fontWeight = FontWeight.Bold)
+                Text(text = "I'm a Trainer", fontSize = 20.sp, color = Color.White,  fontWeight = FontWeight.Bold)
                 Text(
                     text = "I am a professional and I want to offer my services.",
                     color = colorResource(id = R.color.greyTXT),

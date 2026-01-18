@@ -1,13 +1,17 @@
 package com.example.trainwell.Screen.Register
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -24,15 +28,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.trainwell.Data
 import com.example.trainwell.Model.Login.Login
 import com.example.trainwell.Model.Register.Customer
 import com.example.trainwell.Model.Register.User
+import com.example.trainwell.R
 import com.example.trainwell.Routes
 import com.example.trainwell.ViewModel.Register.RegisterViewModel
 import com.google.type.DateTime
@@ -64,191 +73,219 @@ fun ClientForm(
 //            navController.navigate(Routes.register)
 //        }
 //    }
-
-    Column(
+    Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 50.dp)
-            .padding(start = 20.dp)
-            .padding(end = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxSize()
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        colorResource(id = R.color.greenBG2), //verde mas clarito
+                        colorResource(id = R.color.greenBG) // verde mas oscuro
+                    )
+                )
+            )
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "REGISTER",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
-        OutlinedTextField(
-            value = name,
-            onValueChange = {
-                name = it
-                nameError = it.isBlank()
-            },
-            label = {Text("Name")},
-            isError = nameError,
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .focusRequester(focusRequester),
-            singleLine = true
-        )
-        if (nameError) {
-            Text(
-                text = "Name cannot be empty",
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
-        //Campo para el EMAIL
-        OutlinedTextField(
-            value = email,
-            onValueChange = {
-                email = it
-                emailError = it.isBlank()
-            },
-            label = { Text("Email") },
-            isError = emailError,
-            modifier = Modifier
-                .fillMaxWidth(),
-            singleLine = true
-        )
-        if (emailError) {
-            Text(
-                text = "Email cannot be empty",
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
-
-        //Campo para la contraseña
-        OutlinedTextField(
-            value = passwd,
-            onValueChange = {
-                passwd = it
-                passwdError = it.isBlank()
-            },
-            label = { Text("Password") },
-            isError = passwdError,
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-        )
-        if (passwdError) {
-            Text(
-                text = "Password cannot be empty",
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
-        // Campo para objetivo
-        // Hacer desplegable en un futuro
-        OutlinedTextField(
-            value = goal,
-            onValueChange = {
-                goal = it
-                goalError = it.isBlank()
-            },
-            label = {Text("Goal")},
-            isError = goalError,
-            modifier = Modifier
-                .fillMaxWidth()
-
-
-        )
-        if (goalError) {
-            Text(
-                text = "goal cannot be empty",
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
-        // Campo para peso
-        OutlinedTextField(
-            value = weight,
-            onValueChange = {
-                weight = it
-                weightError = it.isBlank() || it.toDoubleOrNull() == null
-            },
-            label = {Text("Weight")},
-            isError = weightError,
-            modifier = Modifier
-                .fillMaxWidth()
-
-
-            )
-        if (weightError) {
-            val errorMessage = when {
-                weight.isBlank() -> "Weight cannot be empty"
-                weight.toDoubleOrNull() == null -> "Please enter a valid number (e.g. 75.5)"
-                else -> ""
-            }
-            Text(
-                text = errorMessage,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
-        // Campo para altura
-        OutlinedTextField(
-            value = height,
-            onValueChange = {
-                height = it
-                heightError = it.isBlank() || it.toIntOrNull() == null
-            },
-            label = {Text("Height")},
-            isError = heightError,
-            modifier = Modifier
-                .fillMaxWidth()
-
-
-            )
-        if (heightError) {
-            val errorMessage = when {
-                height.isBlank() -> "Height cannot be empty"
-                height.toIntOrNull() == null -> "Please enter a valid number (e.g. 75)"
-                else -> ""
-            }
-            Text(
-                text = errorMessage,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
-        //Botón para registrar
-        Button(
-            onClick = {
-                if (email.isNotBlank() && passwd.isNotBlank() && name.isNotBlank() && weight.isNotBlank() &&
-                    height.isNotBlank() && goal.isNotBlank() && weight.toDoubleOrNull() != null && height.toIntOrNull() != null) {
-                    // Añadimos el usuario general con su cliente
-                    var user = User(name = name, email = email, passwd = passwd, role = "C", dateRegister = LocalDateTime.now().toString())
-                    var customer = Customer(goal = goal, weight = weight.toDouble(), height = height.toInt())
-                    viewModel.addUserCustomer(user,customer)
-
-                    emailError = false
-                    passwdError = false
-                    nameError = false
-                    weightError = false
-                    heightError = false
-                    goalError = false
-                    focusRequester.requestFocus() //Devuelve el foco a la caja de texto nombre.
-                } else {
-                    emailError = email.isBlank()
-                    passwdError = passwd.isBlank()
-                    nameError = name.isBlank()
-                    weightError = weight.isBlank() || weight.toDoubleOrNull() == null
-                    heightError = height.isBlank() || height.toIntOrNull() == null
-                    goalError = goal.isBlank()
-                }
-            },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = email.isNotBlank() && passwd.isNotBlank() && name.isNotBlank() && weight.isNotBlank() &&
-                    height.isNotBlank() && goal.isNotBlank() && weight.toDoubleOrNull() != null && height.toIntOrNull() != null
+                .padding(top = 150.dp)
+                .padding(start = 20.dp)
+                .padding(end = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Register")
-        }
-        //si no existe, texto de que se ha equivocado en el login
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(text = "Your fitness journey", color = Color.White, fontSize = 30.sp)
+            Text(text = "STARTS HERE", color = colorResource(id=R.color.greenBT), fontSize = 30.sp)
+            Spacer(modifier = Modifier.padding(10.dp))
+            Text(text = "Let's set up your profile and start tracking progress", color = colorResource(id = R.color.greyTXT), fontSize = 15.sp)
+
+            OutlinedTextField(
+                value = name,
+                onValueChange = {
+                    name = it
+                    nameError = it.isBlank()
+                },
+                label = { Text("Name", color = colorResource(id = R.color.greyTXT)) },
+                isError = nameError,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
+                singleLine = true
+            )
+            if (nameError) {
+                Text(
+                    text = "Name cannot be empty",
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+            //Campo para el EMAIL
+            OutlinedTextField(
+                value = email,
+                onValueChange = {
+                    email = it
+                    emailError = it.isBlank()
+                },
+                label = { Text("Email", color = colorResource(id = R.color.greyTXT)) },
+                isError = emailError,
+                modifier = Modifier
+                    .fillMaxWidth(),
+                singleLine = true
+            )
+            if (emailError) {
+                Text(
+                    text = "Email cannot be empty",
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+
+            //Campo para la contraseña
+            OutlinedTextField(
+                value = passwd,
+                onValueChange = {
+                    passwd = it
+                    passwdError = it.isBlank()
+                },
+                label = { Text("Password", color = colorResource(id = R.color.greyTXT)) },
+                isError = passwdError,
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            )
+            if (passwdError) {
+                Text(
+                    text = "Password cannot be empty",
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+            // Campo para objetivo
+            // Hacer desplegable en un futuro
+            OutlinedTextField(
+                value = goal,
+                onValueChange = {
+                    goal = it
+                    goalError = it.isBlank()
+                },
+                label = { Text("Goal", color = colorResource(id = R.color.greyTXT)) },
+                isError = goalError,
+                modifier = Modifier
+                    .fillMaxWidth()
+
+
+            )
+            if (goalError) {
+                Text(
+                    text = "goal cannot be empty",
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+            // Campo para peso
+            OutlinedTextField(
+                value = weight,
+                onValueChange = {
+                    weight = it
+                    weightError = it.isBlank() || it.toDoubleOrNull() == null
+                },
+                label = { Text("Weight", color = colorResource(id = R.color.greyTXT)) },
+                isError = weightError,
+                modifier = Modifier
+                    .fillMaxWidth()
+
+
+            )
+            if (weightError) {
+                val errorMessage = when {
+                    weight.isBlank() -> "Weight cannot be empty"
+                    weight.toDoubleOrNull() == null -> "Please enter a valid number (e.g. 75.5)"
+                    else -> ""
+                }
+                Text(
+                    text = errorMessage,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+            // Campo para altura
+            OutlinedTextField(
+                value = height,
+                onValueChange = {
+                    height = it
+                    heightError = it.isBlank() || it.toIntOrNull() == null
+                },
+                label = { Text("Height", color = colorResource(id = R.color.greyTXT)) },
+                isError = heightError,
+                modifier = Modifier
+                    .fillMaxWidth()
+
+
+            )
+            if (heightError) {
+                val errorMessage = when {
+                    height.isBlank() -> "Height cannot be empty"
+                    height.toIntOrNull() == null -> "Please enter a valid number (e.g. 75)"
+                    else -> ""
+                }
+                Text(
+                    text = errorMessage,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+            //Botón para registrar
+            Button(
+                onClick = {
+                    if (email.isNotBlank() && passwd.isNotBlank() && name.isNotBlank() && weight.isNotBlank() &&
+                        height.isNotBlank() && goal.isNotBlank() && weight.toDoubleOrNull() != null && height.toIntOrNull() != null
+                    ) {
+                        // Añadimos el usuario general con su cliente
+                        var user = User(
+                            name = name,
+                            email = email,
+                            passwd = passwd,
+                            role = "C",
+                            dateRegister = LocalDateTime.now().toString()
+                        )
+                        var customer = Customer(
+                            goal = goal,
+                            weight = weight.toDouble(),
+                            height = height.toInt()
+                        )
+                        viewModel.addUserCustomer(user, customer)
+
+                        emailError = false
+                        passwdError = false
+                        nameError = false
+                        weightError = false
+                        heightError = false
+                        goalError = false
+                        focusRequester.requestFocus() //Devuelve el foco a la caja de texto nombre.
+                    } else {
+                        emailError = email.isBlank()
+                        passwdError = passwd.isBlank()
+                        nameError = name.isBlank()
+                        weightError = weight.isBlank() || weight.toDoubleOrNull() == null
+                        heightError = height.isBlank() || height.toIntOrNull() == null
+                        goalError = goal.isBlank()
+                    }
+                },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = email.isNotBlank() && passwd.isNotBlank() && name.isNotBlank() && weight.isNotBlank() &&
+                        height.isNotBlank() && goal.isNotBlank() && weight.toDoubleOrNull() != null && height.toIntOrNull() != null,
+                colors = ButtonDefaults.buttonColors(
+                    // Color cuando el botón está habilitado
+                    containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton
+                    contentColor = Color.Black,
+                    // Color cuando el botón NO está habilitado
+                    disabledContainerColor = colorResource(id = R.color.greenCard), //color de fondo del boton
+                    disabledContentColor = Color.Black)
+            ) {
+                Text("Register")
+            }
+            //si no existe, texto de que se ha equivocado en el login
 //        if (existe==false) {
 //            Text(
 //                text = "Email o contraseña incorrectos",
@@ -256,5 +293,6 @@ fun ClientForm(
 //                modifier = Modifier.padding(top = 12.dp)
 //            )
 //        }
+        }
     }
 }
