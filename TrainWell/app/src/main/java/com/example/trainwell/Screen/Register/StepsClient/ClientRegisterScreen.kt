@@ -1,46 +1,42 @@
 package com.example.trainwell.Screen.Register.StepsClient
 
+import android.util.Log
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.trainwell.Model.Register.Customer
-import com.example.trainwell.Model.Register.User
 import com.example.trainwell.R
 import com.example.trainwell.Routes
 import com.example.trainwell.ViewModel.NavigationViewModel
@@ -48,26 +44,16 @@ import com.example.trainwell.ViewModel.Register.RegisterViewModel
 import java.time.LocalDateTime
 
 @Composable
-fun ClientForm(
+fun ClientScreen1(
     navController: NavHostController,
     viewModel: RegisterViewModel,
     navm: NavigationViewModel
 ) {
-    val context = LocalContext.current
-    var name by remember { mutableStateOf("") }
-    var goal by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var weight by remember { mutableStateOf("") }
-    var height by remember { mutableStateOf("") }
-    var passwd by remember { mutableStateOf("") }
-    var goalError by remember { mutableStateOf(false) }
-    var weightError by remember { mutableStateOf(false) }
-    var heightError by remember { mutableStateOf(false) }
-    var nameError by remember { mutableStateOf(false) }
-    var emailError by remember { mutableStateOf(false) }
-    var passwdError by remember { mutableStateOf(false) }
+    var sex by remember { mutableStateOf("") }
+    //PARA LA BARRA DE PROGRESO
+    var globalProgress by remember { mutableFloatStateOf(0.2f) } // Empezamos en 20% (1/5)
+
     // val existe by viewModel.usuarioExiste.observeAsState()
-    val focusRequester = remember { FocusRequester() }
 
 //    LaunchedEffect(existe) {
 //        if (existe == true) {
@@ -95,190 +81,28 @@ fun ClientForm(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LinearDeterminateIndicator(navm, navController)
+
             Spacer(modifier = Modifier.height(16.dp))
             Text(text = "Your fitness journey", color = Color.White, fontSize = 30.sp)
             Text(text = "STARTS HERE", color = colorResource(id=R.color.greenBT), fontSize = 30.sp)
             Spacer(modifier = Modifier.padding(10.dp))
             Text(text = "Let's set up your profile and start tracking progress", color = colorResource(id = R.color.greyTXT), fontSize = 15.sp)
 
-            OutlinedTextField(
-                value = name,
-                onValueChange = {
-                    name = it
-                    nameError = it.isBlank()
-                },
-                label = { Text("Name", color = colorResource(id = R.color.greyTXT)) },
-                isError = nameError,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .focusRequester(focusRequester),
-                singleLine = true
-            )
-            if (nameError) {
-                Text(
-                    text = "Name cannot be empty",
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-            //Campo para el EMAIL
-            OutlinedTextField(
-                value = email,
-                onValueChange = {
-                    email = it
-                    emailError = it.isBlank()
-                },
-                label = { Text("Email", color = colorResource(id = R.color.greyTXT)) },
-                isError = emailError,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                singleLine = true
-            )
-            if (emailError) {
-                Text(
-                    text = "Email cannot be empty",
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
+            MenCard(isSelected = sex == "M") { sex = "M"}
+            WomenCard(isSelected = sex == "W") { sex = "W"}
+            OtherCard(isSelected = sex == "O") { sex = "O"}
 
-            //Campo para la contraseña
-            OutlinedTextField(
-                value = passwd,
-                onValueChange = {
-                    passwd = it
-                    passwdError = it.isBlank()
-                },
-                label = { Text("Password", color = colorResource(id = R.color.greyTXT)) },
-                isError = passwdError,
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
-            if (passwdError) {
-                Text(
-                    text = "Password cannot be empty",
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-            MinimalDropdownMenu()
-            // Campo para objetivo
-            // Hacer desplegable en un futuro
-            OutlinedTextField(
-                value = goal,
-                onValueChange = {
-                    goal = it
-                    goalError = it.isBlank()
-                },
-                label = { Text("Goal", color = colorResource(id = R.color.greyTXT)) },
-                isError = goalError,
-                modifier = Modifier
-                    .fillMaxWidth()
-
-
-            )
-            if (goalError) {
-                Text(
-                    text = "goal cannot be empty",
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-            // Campo para peso
-            OutlinedTextField(
-                value = weight,
-                onValueChange = {
-                    weight = it
-                    weightError = it.isBlank() || it.toDoubleOrNull() == null
-                },
-                label = { Text("Weight", color = colorResource(id = R.color.greyTXT)) },
-                isError = weightError,
-                modifier = Modifier
-                    .fillMaxWidth()
-
-
-            )
-            if (weightError) {
-                val errorMessage = when {
-                    weight.isBlank() -> "Weight cannot be empty"
-                    weight.toDoubleOrNull() == null -> "Please enter a valid number (e.g. 75.5)"
-                    else -> ""
-                }
-                Text(
-                    text = errorMessage,
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-            // Campo para altura
-            OutlinedTextField(
-                value = height,
-                onValueChange = {
-                    height = it
-                    heightError = it.isBlank() || it.toIntOrNull() == null
-                },
-                label = { Text("Height", color = colorResource(id = R.color.greyTXT)) },
-                isError = heightError,
-                modifier = Modifier
-                    .fillMaxWidth()
-
-
-            )
-            if (heightError) {
-                val errorMessage = when {
-                    height.isBlank() -> "Height cannot be empty"
-                    height.toIntOrNull() == null -> "Please enter a valid number (e.g. 75)"
-                    else -> ""
-                }
-                Text(
-                    text = errorMessage,
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
             //Botón para registrar
             Button(
                 onClick = {
-                    if (email.isNotBlank() && passwd.isNotBlank() && name.isNotBlank() && weight.isNotBlank() &&
-                        height.isNotBlank() && goal.isNotBlank() && weight.toDoubleOrNull() != null && height.toIntOrNull() != null
-                    ) {
-                        // Añadimos el usuario general con su cliente
-                        var user = User(
-                            name = name,
-                            email = email,
-                            passwd = passwd,
-                            role = "C",
-                            dateRegister = LocalDateTime.now().toString()
-                        )
-                        var customer = Customer(
-                            goal = goal,
-                            weight = weight.toDouble(),
-                            height = height.toInt()
-                        )
-                        viewModel.addUserCustomer(user, customer)
-
-                        emailError = false
-                        passwdError = false
-                        nameError = false
-                        weightError = false
-                        heightError = false
-                        goalError = false
-                        focusRequester.requestFocus() //Devuelve el foco a la caja de texto nombre.
+                    if (sex.isNotEmpty()) {
                         navController.navigate(Routes.REGISTWO)
                     } else {
-                        emailError = email.isBlank()
-                        passwdError = passwd.isBlank()
-                        nameError = name.isBlank()
-                        weightError = weight.isBlank() || weight.toDoubleOrNull() == null
-                        heightError = height.isBlank() || height.toIntOrNull() == null
-                        goalError = goal.isBlank()
+                        Log.e("ismael", "No has pulsado en ninguna opcion")
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = email.isNotBlank() && passwd.isNotBlank() && name.isNotBlank() && weight.isNotBlank() &&
-                        height.isNotBlank() && goal.isNotBlank() && weight.toDoubleOrNull() != null && height.toIntOrNull() != null,
+                enabled = if (sex.isNotEmpty()) false else true,
                 colors = ButtonDefaults.buttonColors(
                     // Color cuando el botón está habilitado
                     containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton
@@ -287,75 +111,117 @@ fun ClientForm(
                     disabledContainerColor = colorResource(id = R.color.greenCard), //color de fondo del boton
                     disabledContentColor = Color.Black)
             ) {
-                Text("Register")
+                Text("Continue")
             }
-            //si no existe, texto de que se ha equivocado en el login
-//        if (existe==false) {
-//            Text(
-//                text = "Email o contraseña incorrectos",
-//                color = MaterialTheme.colorScheme.error,
-//                modifier = Modifier.padding(top = 12.dp)
-//            )
-//        }
         }
     }
 }
 
 @Composable
-fun MinimalDropdownMenu() {
-    var expanded by remember { mutableStateOf(false) }
-    Box(
+fun MenCard(isSelected:Boolean, onClick: () -> Unit) {
+    var context = LocalContext.current
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(R.color.greenCard)
+        ),
+        border = if (isSelected) BorderStroke(2.dp, colorResource(id = R.color.greenBT)) else null,
         modifier = Modifier
-            .padding(16.dp)
-    ) {
-        TextButton (onClick = { expanded = !expanded }) {
-            Text(text = "What is your goal?")
-        }
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
+            .fillMaxWidth()
+            .height(120.dp)
+            .combinedClickable(
+                onClick = {
+                    onClick()
+                    Log.e("ismael", "Has pulsado en la men card")
+                }
+            )
+            .padding(5.dp)
+    )
+    {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            DropdownMenuItem(
-                text = { Text("Option 1") },
-                onClick = { /* Do something... */ }
-            )
-            HorizontalDivider()
-            DropdownMenuItem(
-                text = { Text("Option 2") },
-                onClick = { /* Do something... */ }
+            Text(text = "Men", fontSize = 20.sp, color = Color.White, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
+            Image(
+                painter = painterResource(id = R.drawable.ic_men),
+                contentDescription = null,
+                modifier = Modifier.size(100.dp)
             )
         }
     }
 }
 
 @Composable
-fun LinearDeterminateIndicator(navViewModel: NavigationViewModel, navController: NavHostController) {
-
-    // Observamos la entrada actual de la pila de navegación
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
-
-
-    val currentProgress = navViewModel.getProgress(currentRoute)
-
-    Column(
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-        horizontalAlignment = Alignment.End,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-
-        CircularProgressIndicator(
-            progress = { currentProgress },
-            modifier = Modifier.size(30.dp),
-            color = colorResource(id = R.color.greenBT),
-            trackColor = MaterialTheme.colorScheme.surfaceVariant,
-        )
-
+fun WomenCard(isSelected:Boolean, onClick: () -> Unit) {
+    var context = LocalContext.current
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(R.color.greenCard)
+        ),
+        border = if (isSelected) BorderStroke(2.dp, colorResource(id = R.color.greenBT)) else null,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(120.dp)
+            .combinedClickable(
+                onClick = {
+                    onClick()
+                    Log.e("ismael", "Has pulsado en la women card")
+                }
+            )
+            .padding(5.dp)
+    )
+    {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Women", fontSize = 20.sp, color = Color.White, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
+            Image(
+                painter = painterResource(id = R.drawable.ic_women),
+                contentDescription = null,
+                modifier = Modifier.size(100.dp)
+            )
+        }
     }
 }
 
 @Composable
-fun Screen2(navController: NavHostController) {
+fun OtherCard(isSelected:Boolean, onClick: () -> Unit) {
+    var context = LocalContext.current
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(R.color.greenCard)
+        ),
+        border = if (isSelected) BorderStroke(2.dp, colorResource(id = R.color.greenBT)) else null,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(70.dp)
+            .combinedClickable(
+                onClick = {
+                    onClick()
+                    Log.e("ismael", "Has pulsado en la other card")
+                }
+            )
+            .padding(5.dp)
+    )
+    {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Other", fontSize = 20.sp, color = Color.White, fontWeight = FontWeight.Bold)
+        }
+    }
+}
+
+@Composable
+fun ClientScreen2(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -373,7 +239,7 @@ fun Screen2(navController: NavHostController) {
 }
 
 @Composable
-fun Screen3(navController: NavHostController) {
+fun ClientScreen3(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -391,7 +257,7 @@ fun Screen3(navController: NavHostController) {
 }
 
 @Composable
-fun Screen4(navController: NavHostController) {
+fun ClientScreen4(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -409,7 +275,7 @@ fun Screen4(navController: NavHostController) {
 }
 
 @Composable
-fun Screen5(navController: NavHostController) {
+fun ClientScreen5(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -427,7 +293,7 @@ fun Screen5(navController: NavHostController) {
 }
 
 @Composable
-fun Screen6(navController: NavHostController) {
+fun ClientScreen6(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()

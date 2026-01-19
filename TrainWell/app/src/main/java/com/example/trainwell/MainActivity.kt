@@ -8,13 +8,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.trainwell.Screen.Login.Login
-import com.example.trainwell.Screen.Register.StepsClient.ClientForm
 import com.example.trainwell.Screen.Register.Register
-import com.example.trainwell.Screen.Register.StepsClient.Screen2
-import com.example.trainwell.Screen.Register.StepsClient.Screen3
-import com.example.trainwell.Screen.Register.StepsClient.Screen4
-import com.example.trainwell.Screen.Register.StepsClient.Screen5
-import com.example.trainwell.Screen.Register.StepsClient.Screen6
+import com.example.trainwell.Screen.Register.StepsClient.ClientScreen1
+import com.example.trainwell.Screen.Register.StepsClient.ClientScreen2
+import com.example.trainwell.Screen.Register.StepsClient.ClientScreen3
+import com.example.trainwell.Screen.Register.StepsClient.ClientScreen4
+import com.example.trainwell.Screen.Register.StepsClient.ClientScreen5
+import com.example.trainwell.Screen.Register.StepsClient.ClientScreen6
 import com.example.trainwell.Screen.Register.TrainerForm
 import com.example.trainwell.ViewModel.Login.LoginViewModel
 import com.example.trainwell.ViewModel.NavigationViewModel
@@ -42,25 +42,25 @@ class MainActivity : ComponentActivity() {
                         Register(navController)
                     }
                     composable(Routes.clientRegister) {
-                        ClientForm(navController,rvm, navm)
+                        ClientScreen1(navController,rvm, navm)
                     }
                     composable(Routes.trainerRegister) {
                         TrainerForm(navController,rvm)
                     }
                     composable(Routes.REGISTWO) {
-                        Screen2(navController)
+                        ClientScreen2(navController)
                     }
                     composable(Routes.REGISTHREE) {
-                        Screen3(navController)
+                        ClientScreen3(navController)
                     }
                     composable(Routes.REGISFOUR) {
-                        Screen4(navController)
+                        ClientScreen4(navController)
                     }
                     composable(Routes.REGISFOUR) {
-                        Screen5(navController)
+                        ClientScreen5(navController)
                     }
                     composable(Routes.REGISFOUR) {
-                        Screen6(navController)
+                        ClientScreen6(navController)
                     }
                 }
             }
