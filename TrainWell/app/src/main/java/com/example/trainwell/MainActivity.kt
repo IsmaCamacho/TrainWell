@@ -8,13 +8,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.trainwell.Screen.Login.Login
+import com.example.trainwell.Screen.Register.Auxiliar.ProgressBarViewModel
 import com.example.trainwell.Screen.Register.Register
 import com.example.trainwell.Screen.Register.StepsClient.ClientScreen1
 import com.example.trainwell.Screen.Register.StepsClient.ClientScreen2
 import com.example.trainwell.Screen.Register.StepsClient.ClientScreen3
 import com.example.trainwell.Screen.Register.StepsClient.ClientScreen4
 import com.example.trainwell.Screen.Register.StepsClient.ClientScreen5
-import com.example.trainwell.Screen.Register.StepsClient.ClientScreen6
 import com.example.trainwell.Screen.Register.TrainerForm
 import com.example.trainwell.ViewModel.Login.LoginViewModel
 import com.example.trainwell.ViewModel.NavigationViewModel
@@ -27,6 +27,7 @@ class MainActivity : ComponentActivity() {
     val lvm = LoginViewModel()
     val rvm = RegisterViewModel()
     val navm = NavigationViewModel()
+    val pbvm = ProgressBarViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,25 +43,22 @@ class MainActivity : ComponentActivity() {
                         Register(navController)
                     }
                     composable(Routes.clientRegister) {
-                        ClientScreen1(navController,rvm, navm)
+                        ClientScreen1(navController,rvm, navm, pbvm)
                     }
                     composable(Routes.trainerRegister) {
                         TrainerForm(navController,rvm)
                     }
                     composable(Routes.REGISTWO) {
-                        ClientScreen2(navController)
+                        ClientScreen2(navController, pbvm)
                     }
                     composable(Routes.REGISTHREE) {
-                        ClientScreen3(navController)
+                        ClientScreen3(navController, pbvm)
                     }
                     composable(Routes.REGISFOUR) {
-                        ClientScreen4(navController)
+                        ClientScreen4(navController, pbvm)
                     }
-                    composable(Routes.REGISFOUR) {
-                        ClientScreen5(navController)
-                    }
-                    composable(Routes.REGISFOUR) {
-                        ClientScreen6(navController)
+                    composable(Routes.REGISFIVE) {
+                        ClientScreen5(navController, pbvm)
                     }
                 }
             }

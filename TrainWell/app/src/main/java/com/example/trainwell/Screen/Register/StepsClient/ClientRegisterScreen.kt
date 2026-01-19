@@ -39,6 +39,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.trainwell.R
 import com.example.trainwell.Routes
+import com.example.trainwell.Screen.Register.Auxiliar.ProgressBarViewModel
+import com.example.trainwell.Screen.Register.Auxiliar.RegistrationLayout
 import com.example.trainwell.ViewModel.NavigationViewModel
 import com.example.trainwell.ViewModel.Register.RegisterViewModel
 import java.time.LocalDateTime
@@ -47,11 +49,11 @@ import java.time.LocalDateTime
 fun ClientScreen1(
     navController: NavHostController,
     viewModel: RegisterViewModel,
-    navm: NavigationViewModel
+    navm: NavigationViewModel,
+    pbvm: ProgressBarViewModel
 ) {
     var sex by remember { mutableStateOf("") }
     //PARA LA BARRA DE PROGRESO
-    var globalProgress by remember { mutableFloatStateOf(0.2f) } // Empezamos en 20% (1/5)
 
     // val existe by viewModel.usuarioExiste.observeAsState()
 
@@ -60,18 +62,7 @@ fun ClientScreen1(
 //            navController.navigate(Routes.register)
 //        }
 //    }
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        colorResource(id = R.color.greenBG2), //verde mas clarito
-                        colorResource(id = R.color.greenBG) // verde mas oscuro
-                    )
-                )
-            )
-    ) {
+    RegistrationLayout(pbvm = pbvm, step = 1, {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -102,7 +93,7 @@ fun ClientScreen1(
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = if (sex.isNotEmpty()) false else true,
+                enabled = if (sex.isEmpty()) false else true,
                 colors = ButtonDefaults.buttonColors(
                     // Color cuando el botón está habilitado
                     containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton
@@ -114,7 +105,7 @@ fun ClientScreen1(
                 Text("Continue")
             }
         }
-    }
+    })
 }
 
 @Composable
@@ -221,90 +212,83 @@ fun OtherCard(isSelected:Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-fun ClientScreen2(navController: NavHostController) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 50.dp)
-            .padding(start = 20.dp)
-            .padding(end = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "Aqui elegimos el género")
-        Button(onClick = {
-            navController.navigate(Routes.REGISTHREE)
-        }) { }
-    }
+fun ClientScreen2(navController: NavHostController, pbvm: ProgressBarViewModel) {
+    RegistrationLayout(pbvm = pbvm, step = 2, {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 50.dp)
+                .padding(start = 20.dp)
+                .padding(end = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Aqui elegimos la edad")
+            Button(onClick = {
+                navController.navigate(Routes.REGISTHREE)
+            }) { }
+        }
+    })
 }
 
 @Composable
-fun ClientScreen3(navController: NavHostController) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 50.dp)
-            .padding(start = 20.dp)
-            .padding(end = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "Aqui elegimos la edad")
-        Button(onClick = {
-            navController.navigate(Routes.REGISFOUR)
-        }) { }
-    }
+fun ClientScreen3(navController: NavHostController, pbvm: ProgressBarViewModel) {
+    RegistrationLayout(pbvm = pbvm, step = 3, {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 50.dp)
+                .padding(start = 20.dp)
+                .padding(end = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Aqui elegimos la altura")
+            Button(onClick = {
+                navController.navigate(Routes.REGISFOUR)
+            }) { }
+        }
+    })
 }
 
 @Composable
-fun ClientScreen4(navController: NavHostController) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 50.dp)
-            .padding(start = 20.dp)
-            .padding(end = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "Aqui elegimos la altura")
-        Button(onClick = {
-            navController.navigate(Routes.REGISFIVE)
-        }) { }
-    }
+fun ClientScreen4(navController: NavHostController, pbvm: ProgressBarViewModel) {
+    RegistrationLayout(pbvm = pbvm, step = 4, {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 50.dp)
+                .padding(start = 20.dp)
+                .padding(end = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Aqui elegimos el peso")
+            Button(onClick = {
+                navController.navigate(Routes.REGISFIVE)
+            }) { }
+        }
+    })
 }
 
 @Composable
-fun ClientScreen5(navController: NavHostController) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 50.dp)
-            .padding(start = 20.dp)
-            .padding(end = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "Aqui elegimos el peso")
-        Button(onClick = {
-            navController.navigate(Routes.REGISTWO)
-        }) { }
-    }
-}
-
-@Composable
-fun ClientScreen6(navController: NavHostController) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 50.dp)
-            .padding(start = 20.dp)
-            .padding(end = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "Aqui elegimos el objetivo")
-    }
-
+fun ClientScreen5(navController: NavHostController, pbvm: ProgressBarViewModel) {
+    RegistrationLayout(pbvm = pbvm, step = 5, {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 50.dp)
+                .padding(start = 20.dp)
+                .padding(end = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Aqui elegimos el objetivo")
+            Button(onClick = {
+                //YA SE PASA A LA SIGUIENTE
+//                navController.navigate(Routes.REGISTHREE)
+            }) { }
+        }
+    })
 }
 

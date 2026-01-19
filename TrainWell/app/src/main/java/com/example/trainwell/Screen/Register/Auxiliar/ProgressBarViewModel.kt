@@ -11,7 +11,7 @@ class ProgressBarViewModel : ViewModel() {
         private set
 
     fun updateProgress(step: Int) {
-        // Si tienes 6 pantallas, cada una es 1/6 (aprox 0.16)
-        currentProgress = 0.20f
+        //cada pantalla es 0.2
+        currentProgress = step * 0.20f
     }
 }
