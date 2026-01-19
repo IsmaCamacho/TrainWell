@@ -6,4 +6,11 @@ object Routes {
 
     val clientRegister = "ClientRegister"
     val trainerRegister = "TrainerRegister"
+
+    val REGISONE = "RegisOne"
+    val REGISTWO = "RegisTwo"
+    val REGISTHREE = "RegisThree"
+    val REGISFOUR = "RegisFour"
+
+    val REGISFIVE = "RegisFive"
 }

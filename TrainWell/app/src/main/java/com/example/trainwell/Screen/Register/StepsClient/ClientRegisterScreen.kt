@@ -1,4 +1,4 @@
-package com.example.trainwell.Screen.Register
+package com.example.trainwell.Screen.Register.StepsClient
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,18 +9,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableDoubleStateOf
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -35,22 +37,21 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.trainwell.Data
-import com.example.trainwell.Model.Login.Login
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.trainwell.Model.Register.Customer
 import com.example.trainwell.Model.Register.User
 import com.example.trainwell.R
 import com.example.trainwell.Routes
+import com.example.trainwell.ViewModel.NavigationViewModel
 import com.example.trainwell.ViewModel.Register.RegisterViewModel
-import com.google.type.DateTime
 import java.time.LocalDateTime
 
 @Composable
 fun ClientForm(
     navController: NavHostController,
-    viewModel: RegisterViewModel
+    viewModel: RegisterViewModel,
+    navm: NavigationViewModel
 ) {
     val context = LocalContext.current
     var name by remember { mutableStateOf("") }
@@ -88,12 +89,13 @@ fun ClientForm(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 150.dp)
+                .padding(top = 100.dp)
                 .padding(start = 20.dp)
                 .padding(end = 20.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            LinearDeterminateIndicator(navm, navController)
             Spacer(modifier = Modifier.height(16.dp))
             Text(text = "Your fitness journey", color = Color.White, fontSize = 30.sp)
             Text(text = "STARTS HERE", color = colorResource(id=R.color.greenBT), fontSize = 30.sp)
@@ -161,6 +163,7 @@ fun ClientForm(
                     style = MaterialTheme.typography.bodySmall
                 )
             }
+            MinimalDropdownMenu()
             // Campo para objetivo
             // Hacer desplegable en un futuro
             OutlinedTextField(
@@ -263,6 +266,7 @@ fun ClientForm(
                         heightError = false
                         goalError = false
                         focusRequester.requestFocus() //Devuelve el foco a la caja de texto nombre.
+                        navController.navigate(Routes.REGISTWO)
                     } else {
                         emailError = email.isBlank()
                         passwdError = passwd.isBlank()
@@ -296,3 +300,145 @@ fun ClientForm(
         }
     }
 }
+
+@Composable
+fun MinimalDropdownMenu() {
+    var expanded by remember { mutableStateOf(false) }
+    Box(
+        modifier = Modifier
+            .padding(16.dp)
+    ) {
+        TextButton (onClick = { expanded = !expanded }) {
+            Text(text = "What is your goal?")
+        }
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            DropdownMenuItem(
+                text = { Text("Option 1") },
+                onClick = { /* Do something... */ }
+            )
+            HorizontalDivider()
+            DropdownMenuItem(
+                text = { Text("Option 2") },
+                onClick = { /* Do something... */ }
+            )
+        }
+    }
+}
+
+@Composable
+fun LinearDeterminateIndicator(navViewModel: NavigationViewModel, navController: NavHostController) {
+
+    // Observamos la entrada actual de la pila de navegación
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+
+    val currentProgress = navViewModel.getProgress(currentRoute)
+
+    Column(
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalAlignment = Alignment.End,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+
+        CircularProgressIndicator(
+            progress = { currentProgress },
+            modifier = Modifier.size(30.dp),
+            color = colorResource(id = R.color.greenBT),
+            trackColor = MaterialTheme.colorScheme.surfaceVariant,
+        )
+
+    }
+}
+
+@Composable
+fun Screen2(navController: NavHostController) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 50.dp)
+            .padding(start = 20.dp)
+            .padding(end = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Aqui elegimos el género")
+        Button(onClick = {
+            navController.navigate(Routes.REGISTHREE)
+        }) { }
+    }
+}
+
+@Composable
+fun Screen3(navController: NavHostController) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 50.dp)
+            .padding(start = 20.dp)
+            .padding(end = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Aqui elegimos la edad")
+        Button(onClick = {
+            navController.navigate(Routes.REGISFOUR)
+        }) { }
+    }
+}
+
+@Composable
+fun Screen4(navController: NavHostController) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 50.dp)
+            .padding(start = 20.dp)
+            .padding(end = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Aqui elegimos la altura")
+        Button(onClick = {
+            navController.navigate(Routes.REGISFIVE)
+        }) { }
+    }
+}
+
+@Composable
+fun Screen5(navController: NavHostController) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 50.dp)
+            .padding(start = 20.dp)
+            .padding(end = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Aqui elegimos el peso")
+        Button(onClick = {
+            navController.navigate(Routes.REGISTWO)
+        }) { }
+    }
+}
+
+@Composable
+fun Screen6(navController: NavHostController) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 50.dp)
+            .padding(start = 20.dp)
+            .padding(end = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Aqui elegimos el objetivo")
+    }
+
+}
+
