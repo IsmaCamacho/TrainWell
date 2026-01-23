@@ -3,7 +3,6 @@ package com.example.trainwell.Screen.Register.StepsClient
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,25 +14,30 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -43,7 +47,6 @@ import com.example.trainwell.Screen.Register.Auxiliar.ProgressBarViewModel
 import com.example.trainwell.Screen.Register.Auxiliar.RegistrationLayout
 import com.example.trainwell.ViewModel.NavigationViewModel
 import com.example.trainwell.ViewModel.Register.RegisterViewModel
-import java.time.LocalDateTime
 
 @Composable
 fun ClientScreen1(
@@ -63,27 +66,28 @@ fun ClientScreen1(
 //        }
 //    }
     RegistrationLayout(pbvm = pbvm, step = 1, {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 100.dp)
-                .padding(start = 20.dp)
-                .padding(end = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        Box(modifier = Modifier.fillMaxSize()){
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 100.dp)
+                    .padding(start = 20.dp)
+                    .padding(end = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Your fitness journey", color = Color.White, fontSize = 30.sp)
-            Text(text = "STARTS HERE", color = colorResource(id=R.color.greenBT), fontSize = 30.sp)
-            Spacer(modifier = Modifier.padding(10.dp))
-            Text(text = "Let's set up your profile and start tracking progress", color = colorResource(id = R.color.greyTXT), fontSize = 15.sp)
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "Your fitness journey", color = Color.White, fontSize = 30.sp)
+                Text(text = "STARTS HERE", color = colorResource(id=R.color.greenBT), fontSize = 30.sp)
+                Spacer(modifier = Modifier.padding(10.dp))
+                Text(text = "Let's set up your profile and start tracking progress", color = colorResource(id = R.color.greyTXT), fontSize = 15.sp)
 
-            MenCard(isSelected = sex == "M") { sex = "M"}
-            WomenCard(isSelected = sex == "W") { sex = "W"}
-            OtherCard(isSelected = sex == "O") { sex = "O"}
-
-            //Botón para registrar
+                MenCard(isSelected = sex == "M") { sex = "M"}
+                WomenCard(isSelected = sex == "W") { sex = "W"}
+                OtherCard(isSelected = sex == "O") { sex = "O"}
+            }
+            //Botón para CONTINUAR
             Button(
                 onClick = {
                     if (sex.isNotEmpty()) {
@@ -92,7 +96,10 @@ fun ClientScreen1(
                         Log.e("ismael", "No has pulsado en ninguna opcion")
                     }
                 },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(16.dp),
                 enabled = if (sex.isEmpty()) false else true,
                 colors = ButtonDefaults.buttonColors(
                     // Color cuando el botón está habilitado
@@ -210,85 +217,3 @@ fun OtherCard(isSelected:Boolean, onClick: () -> Unit) {
         }
     }
 }
-
-@Composable
-fun ClientScreen2(navController: NavHostController, pbvm: ProgressBarViewModel) {
-    RegistrationLayout(pbvm = pbvm, step = 2, {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 50.dp)
-                .padding(start = 20.dp)
-                .padding(end = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "Aqui elegimos la edad")
-            Button(onClick = {
-                navController.navigate(Routes.REGISTHREE)
-            }) { }
-        }
-    })
-}
-
-@Composable
-fun ClientScreen3(navController: NavHostController, pbvm: ProgressBarViewModel) {
-    RegistrationLayout(pbvm = pbvm, step = 3, {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 50.dp)
-                .padding(start = 20.dp)
-                .padding(end = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "Aqui elegimos la altura")
-            Button(onClick = {
-                navController.navigate(Routes.REGISFOUR)
-            }) { }
-        }
-    })
-}
-
-@Composable
-fun ClientScreen4(navController: NavHostController, pbvm: ProgressBarViewModel) {
-    RegistrationLayout(pbvm = pbvm, step = 4, {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 50.dp)
-                .padding(start = 20.dp)
-                .padding(end = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "Aqui elegimos el peso")
-            Button(onClick = {
-                navController.navigate(Routes.REGISFIVE)
-            }) { }
-        }
-    })
-}
-
-@Composable
-fun ClientScreen5(navController: NavHostController, pbvm: ProgressBarViewModel) {
-    RegistrationLayout(pbvm = pbvm, step = 5, {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 50.dp)
-                .padding(start = 20.dp)
-                .padding(end = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "Aqui elegimos el objetivo")
-            Button(onClick = {
-                //YA SE PASA A LA SIGUIENTE
-//                navController.navigate(Routes.REGISTHREE)
-            }) { }
-        }
-    })
-}
-
