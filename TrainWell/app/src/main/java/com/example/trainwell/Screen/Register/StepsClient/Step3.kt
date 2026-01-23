@@ -51,7 +51,7 @@ fun ClientScreen3(navController: NavHostController, pbvm: ProgressBarViewModel) 
     var isCm by remember { mutableStateOf(true) }
 
     Box(Modifier.fillMaxSize()) {
-        RegistrationLayout(pbvm = pbvm, step = 2, {
+        RegistrationLayout(pbvm = pbvm, step = 3, {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -64,7 +64,7 @@ fun ClientScreen3(navController: NavHostController, pbvm: ProgressBarViewModel) 
                 Text(text = "How tall are you?", color = Color.White, fontSize = 30.sp)
             }
             Column(
-                modifier = Modifier.align(Alignment.Center), // Centra todo este bloque en el Box
+                modifier = Modifier.align(Alignment.Center), // Centra el bloque en el box
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {

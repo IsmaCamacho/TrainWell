@@ -11,6 +11,6 @@ object Routes {
     val REGISTWO = "RegisTwo"
     val REGISTHREE = "RegisThree"
     val REGISFOUR = "RegisFour"
-
     val REGISFIVE = "RegisFive"
+    val REGISFINAL = "RegisFinal"
 }

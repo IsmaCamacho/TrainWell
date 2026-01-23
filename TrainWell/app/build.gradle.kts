@@ -60,4 +60,7 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    // Para usar API publica para imagenes de perfil del stpe 6
+    implementation("io.coil-kt:coil-compose:2.5.0")
 }
