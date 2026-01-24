@@ -25,6 +25,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,11 +52,12 @@ import com.example.trainwell.ViewModel.Register.RegisterViewModel
 @Composable
 fun ClientScreen1(
     navController: NavHostController,
-    viewModel: RegisterViewModel,
+    rvm: RegisterViewModel,
     navm: NavigationViewModel,
     pbvm: ProgressBarViewModel
 ) {
-    var sex by remember { mutableStateOf("") }
+    val sex by rvm.sex.collectAsState()
+
     //PARA LA BARRA DE PROGRESO
 
     // val existe by viewModel.usuarioExiste.observeAsState()
@@ -83,9 +85,9 @@ fun ClientScreen1(
                 Spacer(modifier = Modifier.padding(10.dp))
                 Text(text = "Let's set up your profile and start tracking progress", color = colorResource(id = R.color.greyTXT), fontSize = 15.sp)
 
-                MenCard(isSelected = sex == "M") { sex = "M"}
-                WomenCard(isSelected = sex == "W") { sex = "W"}
-                OtherCard(isSelected = sex == "O") { sex = "O"}
+                MenCard(isSelected = sex == "M") { rvm.onSexSelected("M")}
+                WomenCard(isSelected = sex == "W") { rvm.onSexSelected("W")}
+                OtherCard(isSelected = sex == "O") { rvm.onSexSelected("O")}
             }
             //Botón para CONTINUAR
             Button(

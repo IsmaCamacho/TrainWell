@@ -10,11 +10,19 @@ import com.example.trainwell.Model.Register.User
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.tasks.await
 
 class RegisterViewModel: ViewModel() {
-
     val db = Firebase.firestore
+
+    val sex = MutableStateFlow<String>("")
+
+    // Función para actualizar el valor de sex
+    fun onSexSelected(selectedSex: String) {
+        sex.value = selectedSex
+    }
+
 
     //AÑADIR A LA BBDD un usuario
     fun addUserCustomer(user: User, customer: Customer){

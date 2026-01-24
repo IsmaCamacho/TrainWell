@@ -20,6 +20,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,16 +34,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.trainwell.R
 import com.example.trainwell.Routes
 import com.example.trainwell.Screen.Register.Auxiliar.ProgressBarViewModel
 import com.example.trainwell.Screen.Register.Auxiliar.RegistrationLayout
+import com.example.trainwell.ViewModel.Register.RegisterViewModel
 
 @Composable
 fun ClientScreen5(
     navController: NavHostController,
-    pbvm: ProgressBarViewModel
+    pbvm: ProgressBarViewModel,
+    rvm: RegisterViewModel
 ) {
     var goal by remember { mutableStateOf("") }
     //PARA LA BARRA DE PROGRESO
@@ -59,16 +63,16 @@ fun ClientScreen5(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                Text(text = "How much do you weigh?", color = Color.White, fontSize = 30.sp)
+                Text(text = "What is your Goal?", color = Color.White, fontSize = 30.sp)
                 Spacer(modifier = Modifier.height(30.dp))
-                GainMuscleCard(isSelected = goal == "W") { goal = "W"}
-                LoseWeightCard(isSelected = goal == "L") { goal = "L"}
+                GainMuscleCard(rvm,isSelected = goal == "W") { goal = "W"}
+                LoseWeightCard(rvm,isSelected = goal == "L") { goal = "L"}
             }
             //Botón para CONTINUAR
             Button(
                 onClick = {
                     if (goal.isNotEmpty()) {
-                        navController.navigate(Routes.REGISFINAL)
+                        navController.navigate(Routes.REGISSIX)
                     } else {
                         Log.e("ismael", "No has pulsado en ninguna opcion")
                     }
@@ -93,7 +97,8 @@ fun ClientScreen5(
 }
 
 @Composable
-fun GainMuscleCard(isSelected:Boolean, onClick: () -> Unit) {
+fun GainMuscleCard(viewModel: RegisterViewModel,isSelected:Boolean, onClick: () -> Unit) {
+    val sex by viewModel.sex.collectAsState()
     var context = LocalContext.current
     Card(
         colors = CardDefaults.cardColors(
@@ -118,18 +123,29 @@ fun GainMuscleCard(isSelected:Boolean, onClick: () -> Unit) {
                 .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "Gain Muscle", fontSize = 20.sp, color = Color.White, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
-            Image(
-                painter = painterResource(id = R.drawable.ic_gainmuscle),
-                contentDescription = null,
-                modifier = Modifier.size(100.dp)
-            )
+            if (sex == "M") {
+                Text(text = "Gain Muscle", fontSize = 20.sp, color = Color.White, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
+                Image(
+                    painter = painterResource(id = R.drawable.ic_gainmuscle),
+                    contentDescription = null,
+                    modifier = Modifier.size(100.dp)
+                )
+            } else if (sex == "W") {
+                Text(text = "Tone your body", fontSize = 20.sp, color = Color.White, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
+                Image(
+                    painter = painterResource(id = R.drawable.ic_girltonebody),
+                    contentDescription = null,
+                    modifier = Modifier.size(100.dp)
+                )
+            }
+
         }
     }
 }
 
 @Composable
-fun LoseWeightCard(isSelected:Boolean, onClick: () -> Unit) {
+fun LoseWeightCard(viewModel: RegisterViewModel,isSelected:Boolean, onClick: () -> Unit) {
+    val sex by viewModel.sex.collectAsState()
     var context = LocalContext.current
     Card(
         colors = CardDefaults.cardColors(
@@ -155,11 +171,20 @@ fun LoseWeightCard(isSelected:Boolean, onClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = "Lose Weight", fontSize = 20.sp, color = Color.White, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
-            Image(
-                painter = painterResource(id = R.drawable.ic_loseweight),
-                contentDescription = null,
-                modifier = Modifier.size(100.dp)
-            )
+            if (sex == "M") {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_loseweight),
+                    contentDescription = null,
+                    modifier = Modifier.size(100.dp)
+                )
+            } else if (sex == "W") {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_loseweightgirl),
+                    contentDescription = null,
+                    modifier = Modifier.size(100.dp)
+                )
+            }
+
         }
     }
 }
