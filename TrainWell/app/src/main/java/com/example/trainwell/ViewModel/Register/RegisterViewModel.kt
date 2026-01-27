@@ -91,4 +91,28 @@ class RegisterViewModel: ViewModel() {
             Log.e("Ismael", "Error agregando entrenador")
         }
     }
+
+
+    /*AUXILIAR PARA CUANDO HAGA FALTA
+    // Datos para la tabla USUARIO (Screen 7)
+    var nombreUsuario by mutableStateOf("")
+    var correo by mutableStateOf("")
+    var password by mutableStateOf("")
+
+    // Datos para la tabla CLIENTE (Screens 1, 3, 4, 5)
+    var sexo by mutableStateOf("")      // Screen 1
+    var altura by mutableStateOf("")    // Screen 3
+    var peso by mutableStateOf("")      // Screen 4
+    var objetivo by mutableStateOf("")  // Screen 5
+
+    // Dato temporal (Screen 2)
+    var edad by mutableStateOf("")      // No va a BBDD según tu esquema, pero sirve para cálculos
+
+    // Función final en la Screen 7
+    fun finalizarRegistro() {
+        // 1. Lógica para crear el usuario en Authentication (Firebase o tu sistema)
+        // 2. Insertar en la tabla USUARIO (nombre, correo, pass)
+        // 3. Insertar en la tabla CLIENTE usando el ID del usuario creado
+    }*/
+
 }

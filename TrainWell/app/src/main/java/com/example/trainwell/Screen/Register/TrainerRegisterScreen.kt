@@ -89,6 +89,7 @@ fun TrainerForm(
                     .focusRequester(focusRequester),
                 singleLine = true
             )
+
             if (nameError) {
                 Text(
                     text = "Name cannot be empty",
@@ -96,6 +97,7 @@ fun TrainerForm(
                     style = MaterialTheme.typography.bodySmall
                 )
             }
+
             //Campo para el EMAIL
             OutlinedTextField(
                 value = email,
@@ -109,6 +111,7 @@ fun TrainerForm(
                     .fillMaxWidth(),
                 singleLine = true
             )
+
             if (emailError) {
                 Text(
                     text = "Email cannot be empty",
@@ -130,6 +133,7 @@ fun TrainerForm(
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
+
             if (passwdError) {
                 Text(
                     text = "Password cannot be empty",
@@ -137,6 +141,7 @@ fun TrainerForm(
                     style = MaterialTheme.typography.bodySmall
                 )
             }
+
             // Campo para objetivo
             // Hacer desplegable en un futuro
             OutlinedTextField(
@@ -149,9 +154,8 @@ fun TrainerForm(
                 isError = priceError,
                 modifier = Modifier
                     .fillMaxWidth()
-
-
             )
+
             if (bioError) {
                 Text(
                     text = "Bio cannot be empty",
@@ -159,6 +163,7 @@ fun TrainerForm(
                     style = MaterialTheme.typography.bodySmall
                 )
             }
+
             // Campo para peso
             OutlinedTextField(
                 value = price,
@@ -170,9 +175,8 @@ fun TrainerForm(
                 isError = priceError,
                 modifier = Modifier
                     .fillMaxWidth()
-
-
             )
+            
             if (priceError) {
                 val errorMessage = when {
                     price.isBlank() -> "Price cannot be empty"

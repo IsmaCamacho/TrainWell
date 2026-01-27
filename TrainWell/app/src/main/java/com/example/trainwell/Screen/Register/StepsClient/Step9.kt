@@ -66,7 +66,7 @@ fun ClientScreen9(
         }
         Button(
             onClick = {
-               //  navController.navigate(Routes.REGISSEVEN)
+               navController.navigate(Routes.REGISFINAL)
             },
             modifier = Modifier
                 .fillMaxWidth()

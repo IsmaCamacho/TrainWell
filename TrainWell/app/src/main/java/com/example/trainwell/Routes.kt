@@ -16,4 +16,5 @@ object Routes {
     val REGISSEVEN = "RegisSeven"
     val REGISEIGHT = "RegisEight"
     val REGISNINE = "RegisNine"
+    val REGISFINAL = "RegisFinal"
 }

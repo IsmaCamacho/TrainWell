@@ -5,5 +5,6 @@ data class Customer(
     val trainerId:String? = null,
     val goal:String,
     val weight: Double,
-    val height: Int
+    val height: Int,
+    val sex: String
 )

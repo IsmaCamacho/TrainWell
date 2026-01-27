@@ -19,6 +19,7 @@ import com.example.trainwell.Screen.Register.StepsClient.ClientScreen6
 import com.example.trainwell.Screen.Register.StepsClient.ClientScreen7
 import com.example.trainwell.Screen.Register.StepsClient.ClientScreen8
 import com.example.trainwell.Screen.Register.StepsClient.ClientScreen9
+import com.example.trainwell.Screen.Register.StepsClient.ClientScreenFinal
 import com.example.trainwell.Screen.Register.TrainerForm
 import com.example.trainwell.ViewModel.Login.LoginViewModel
 import com.example.trainwell.ViewModel.NavigationViewModel
@@ -62,7 +63,7 @@ class MainActivity : ComponentActivity() {
                         ClientScreen4(navController, pbvm)
                     }
                     composable(Routes.REGISFIVE) {
-                        ClientScreen5(navController, pbvm,rvm)
+                        ClientScreen5(navController, pbvm, rvm)
                     }
                     composable(Routes.REGISSIX) {
                         ClientScreen6(navController)
@@ -75,6 +76,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(Routes.REGISNINE) {
                         ClientScreen9(navController)
+                    }
+                    composable(Routes.REGISFINAL) {
+                        ClientScreenFinal(navController, rvm)
                     }
                 }
             }
