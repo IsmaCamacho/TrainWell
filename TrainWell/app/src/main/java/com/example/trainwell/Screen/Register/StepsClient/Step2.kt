@@ -70,7 +70,7 @@ fun ClientScreen2(navController: NavHostController, pbvm: ProgressBarViewModel) 
                         onValueChange = {
                             if (it.length <= 2) //para que no deje escribir mas de 2 cifras
                                 edad = it
-                            edadError = it.isBlank()
+                            edadError = it.isBlank() || edad.toIntOrNull() == null
                         },
                         isError = edadError,
                         singleLine = true,
@@ -106,7 +106,7 @@ fun ClientScreen2(navController: NavHostController, pbvm: ProgressBarViewModel) 
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
                     .padding(16.dp),
-                enabled = if (edad.isEmpty()) false else true,
+                enabled = edad.isNotEmpty() && edad.toIntOrNull() != null,
                 colors = ButtonDefaults.buttonColors(
                     // Color cuando el botón está habilitado
                     containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton

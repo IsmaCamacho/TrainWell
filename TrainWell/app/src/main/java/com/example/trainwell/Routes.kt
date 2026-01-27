@@ -17,4 +17,5 @@ object Routes {
     val REGISEIGHT = "RegisEight"
     val REGISNINE = "RegisNine"
     val REGISFINAL = "RegisFinal"
+    val DASHCLIENT = "DashClient"
 }

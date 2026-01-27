@@ -63,4 +63,13 @@ dependencies {
 
     // Para usar API publica para imagenes de perfil del stpe 6
     implementation("io.coil-kt:coil-compose:2.5.0")
+
+    // 1. Importa el BoM (gestiona las versiones por ti)
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+
+    // 2. La librería principal de Auth (ya incluye lo que antes era KTX)
+    implementation("com.google.firebase:firebase-auth")
+
+    // 3. (Asegúrate de tener también Firestore si la usas)
+    implementation("com.google.firebase:firebase-firestore")
 }

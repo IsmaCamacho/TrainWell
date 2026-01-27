@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.trainwell.Screen.Dashboard.ClientScreenDashboard
 import com.example.trainwell.Screen.Login.Login
 import com.example.trainwell.Screen.Register.Auxiliar.ProgressBarViewModel
 import com.example.trainwell.Screen.Register.Register
@@ -57,10 +58,10 @@ class MainActivity : ComponentActivity() {
                         ClientScreen2(navController, pbvm)
                     }
                     composable(Routes.REGISTHREE) {
-                        ClientScreen3(navController, pbvm)
+                        ClientScreen3(navController, pbvm, rvm)
                     }
                     composable(Routes.REGISFOUR) {
-                        ClientScreen4(navController, pbvm)
+                        ClientScreen4(navController, pbvm, rvm)
                     }
                     composable(Routes.REGISFIVE) {
                         ClientScreen5(navController, pbvm, rvm)
@@ -79,6 +80,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(Routes.REGISFINAL) {
                         ClientScreenFinal(navController, rvm)
+                    }
+                    composable(Routes.DASHCLIENT) {
+                        ClientScreenDashboard(navController, rvm)
                     }
                 }
             }

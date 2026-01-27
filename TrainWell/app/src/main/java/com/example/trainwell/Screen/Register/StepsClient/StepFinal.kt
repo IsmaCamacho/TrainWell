@@ -24,6 +24,7 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -52,6 +53,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.trainwell.Model.Login.Login
 import com.example.trainwell.R
@@ -60,11 +62,8 @@ import com.example.trainwell.Screen.Register.Auxiliar.ProgressBarViewModel
 import com.example.trainwell.ViewModel.Register.RegisterViewModel
 
 @Composable
-fun ClientScreenFinal(navController: NavHostController, viewModel: RegisterViewModel) {
+fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) {
     val context = LocalContext.current
-    var username by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var passwd by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
     var usernameError by remember { mutableStateOf(false) }
     var passwdError by remember { mutableStateOf(false) }
@@ -127,14 +126,17 @@ fun ClientScreenFinal(navController: NavHostController, viewModel: RegisterViewM
 
             //Campo para el username
             OutlinedTextField(
-                value = username,
+                value = rvm.username,
                 onValueChange = {
-                    username = it
+                    rvm.username = it
                     usernameError = it.isBlank()
                 },
-                label = { Text(text= "Username", color = colorResource(id=R.color.greyTXT)) }
-                ,
-
+                label = { Text(text= "Username", color = colorResource(id=R.color.greyTXT)) },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,   // Color mientras escribe
+                    unfocusedTextColor = Color.White, // Color cuando no está seleccionado
+                    cursorColor = Color.White         // Color de la barra de escritura
+                ),
                 isError = usernameError,
                 modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
                 singleLine = true
@@ -150,14 +152,18 @@ fun ClientScreenFinal(navController: NavHostController, viewModel: RegisterViewM
 
             //Campo para el EMAIL
             OutlinedTextField(
-                value = email,
+                value = rvm.email,
                 onValueChange = {
-                    email = it
+                    rvm.email = it
                     emailError = it.isBlank()
                 },
                 label = { Text(text= "Email", color = colorResource(id=R.color.greyTXT)) },
-
                 isError = emailError,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,   // Color mientras escribe
+                    unfocusedTextColor = Color.White, // Color cuando no está seleccionado
+                    cursorColor = Color.White         // Color de la barra de escritura
+                ),
                 modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
                 singleLine = true
             )
@@ -172,14 +178,19 @@ fun ClientScreenFinal(navController: NavHostController, viewModel: RegisterViewM
 
             //Campo para la contraseña
             OutlinedTextField(
-                value = passwd,
+                value = rvm.password,
                 onValueChange = {
-                    passwd = it
+                    rvm.password = it
                     passwdError = it.isBlank()
                 },
                 label = { Text("Password", color = colorResource(id=R.color.greyTXT)) },
                 isError = passwdError,
                 modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,   // Color mientras escribe
+                    unfocusedTextColor = Color.White, // Color cuando no está seleccionado
+                    cursorColor = Color.White         // Color de la barra de escritura
+                ),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -203,20 +214,25 @@ fun ClientScreenFinal(navController: NavHostController, viewModel: RegisterViewM
             //Botón para enviar
             ElevatedButton(
                 onClick = {
-                    if (username.isNotBlank() && email.isNotBlank() && passwd.isNotBlank()) {
+                    if (rvm.username.isNotBlank() && rvm.email.isNotBlank() && rvm.password.isNotBlank()) {
 
                         usernameError = false
                         emailError = false
                         passwdError = false
-                        focusRequester.requestFocus() //Devuelve el foco a la caja de texto nombre.
+
+                        rvm.finalizarRegistro()  //lo añade a la bbdd
+
+                        navController.navigate(Routes.DASHCLIENT){
+                            popUpTo(Routes.REGISFINAL) { inclusive = true } //el inclusive es que limpia ya el historial de registro
+                        }
                     } else {
-                        usernameError = username.isBlank()
-                        emailError = email.isBlank()
-                        passwdError = passwd.isBlank()
+                        usernameError = rvm.username.isBlank()
+                        emailError = rvm.email.isBlank()
+                        passwdError = rvm.password.isBlank()
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = username.isNotBlank() && email.isNotBlank() && passwd.isNotBlank(),
+                enabled = rvm.username.isNotBlank() && rvm.email.isNotBlank() && rvm.password.isNotBlank(),
                 colors = ButtonDefaults.buttonColors(
                     // Color cuando el botón está habilitado
                     containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton

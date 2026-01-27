@@ -41,11 +41,11 @@ import com.example.trainwell.R
 import com.example.trainwell.Routes
 import com.example.trainwell.Screen.Register.Auxiliar.ProgressBarViewModel
 import com.example.trainwell.Screen.Register.Auxiliar.RegistrationLayout
+import com.example.trainwell.ViewModel.Register.RegisterViewModel
 
 //SCREEN PARA EL PESO
 @Composable
-fun ClientScreen4(navController: NavHostController, pbvm: ProgressBarViewModel) {
-    var peso by remember { mutableStateOf("") }
+fun ClientScreen4(navController: NavHostController, pbvm: ProgressBarViewModel, rvm: RegisterViewModel) {
     var pesoError by remember { mutableStateOf(false) }
 
     var isKg by remember { mutableStateOf(true) }
@@ -74,11 +74,11 @@ fun ClientScreen4(navController: NavHostController, pbvm: ProgressBarViewModel) 
                 ) {
                     //Campo para la ALTURA
                     OutlinedTextField(
-                        value = peso,
+                        value = rvm.weight,
                         onValueChange = {
                             if (it.length <= 3) //para que no deje escribir mas de 2 cifras
-                                peso = it
-                            pesoError = it.isBlank()
+                                rvm.weight = it
+                            pesoError = it.isBlank() || it.toDoubleOrNull() == null
                         },
                         isError = pesoError,
                         singleLine = true,
@@ -122,17 +122,15 @@ fun ClientScreen4(navController: NavHostController, pbvm: ProgressBarViewModel) 
             //Botón para CONTINUAR
             Button(
                 onClick = {
-                    if (peso.isNotEmpty()) {
+                    if (rvm.weight.isNotEmpty()) {
                         navController.navigate(Routes.REGISFIVE)
-                    } else {
-                        Log.e("ismael", "El peso está vacío")
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
                     .padding(16.dp),
-                enabled = if (peso.isEmpty()) false else true,
+                enabled = rvm.weight.isNotEmpty() && rvm.weight.toDoubleOrNull() != null,
                 colors = ButtonDefaults.buttonColors(
                     // Color cuando el botón está habilitado
                     containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton

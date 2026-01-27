@@ -48,9 +48,7 @@ fun ClientScreen5(
     pbvm: ProgressBarViewModel,
     rvm: RegisterViewModel
 ) {
-    var goal by remember { mutableStateOf("") }
     //PARA LA BARRA DE PROGRESO
-
     RegistrationLayout(pbvm = pbvm, step = 5, {
         Box(modifier = Modifier.fillMaxSize()){
             Column(
@@ -65,23 +63,21 @@ fun ClientScreen5(
 
                 Text(text = "What is your Goal?", color = Color.White, fontSize = 30.sp)
                 Spacer(modifier = Modifier.height(30.dp))
-                GainMuscleCard(rvm,isSelected = goal == "W") { goal = "W"}
-                LoseWeightCard(rvm,isSelected = goal == "L") { goal = "L"}
+                GainMuscleCard(rvm,isSelected = rvm.goal == "Gain Muscle") { rvm.goal = "Gain Muscle"}
+                LoseWeightCard(rvm,isSelected = rvm.goal == "Lose Weight") { rvm.goal = "Lose Weight"}
             }
             //Botón para CONTINUAR
             Button(
                 onClick = {
-                    if (goal.isNotEmpty()) {
+                    if (rvm.goal.isNotEmpty()) {
                         navController.navigate(Routes.REGISSIX)
-                    } else {
-                        Log.e("ismael", "No has pulsado en ninguna opcion")
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
                     .padding(16.dp),
-                enabled = if (goal.isEmpty()) false else true,
+                enabled = rvm.goal.isNotEmpty(),
                 colors = ButtonDefaults.buttonColors(
                     // Color cuando el botón está habilitado
                     containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton
@@ -98,8 +94,9 @@ fun ClientScreen5(
 
 @Composable
 fun GainMuscleCard(viewModel: RegisterViewModel,isSelected:Boolean, onClick: () -> Unit) {
-    val sex by viewModel.sex.collectAsState()
-    var context = LocalContext.current
+
+    val sex = viewModel.sex
+
     Card(
         colors = CardDefaults.cardColors(
             containerColor = colorResource(R.color.greenCard)
@@ -145,8 +142,9 @@ fun GainMuscleCard(viewModel: RegisterViewModel,isSelected:Boolean, onClick: () 
 
 @Composable
 fun LoseWeightCard(viewModel: RegisterViewModel,isSelected:Boolean, onClick: () -> Unit) {
-    val sex by viewModel.sex.collectAsState()
-    var context = LocalContext.current
+
+    val sex = viewModel.sex
+
     Card(
         colors = CardDefaults.cardColors(
             containerColor = colorResource(R.color.greenCard)

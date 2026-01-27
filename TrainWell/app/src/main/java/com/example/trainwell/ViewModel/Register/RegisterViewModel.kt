@@ -11,43 +11,61 @@ import com.example.trainwell.Model.Register.Customer
 import com.example.trainwell.Model.Register.Trainer
 import com.example.trainwell.Model.Register.User
 import com.google.firebase.Firebase
-import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.tasks.await
+
 
 class RegisterViewModel: ViewModel() {
 
-    //AUXILIAR PARA CUANDO HAGA FALTA
-    // Datos para la tabla USUARIO (Screen 7)
-    var nombreUsuario by mutableStateOf("")
-    var correo by mutableStateOf("")
+    //Datos para la tabla user (screenStepFinal)
+    var username by mutableStateOf("")
+    var email by mutableStateOf("")
     var password by mutableStateOf("")
 
-    // Datos para la tabla CLIENTE (Screens 1, 3, 4, 5)
-    var sexo by mutableStateOf("")      // Screen 1
-    var altura by mutableStateOf("")    // Screen 3
-    var peso by mutableStateOf("")      // Screen 4
-    var objetivo by mutableStateOf("")  // Screen 5
+    // Datos para la tabla CUSTOMER (Screens 1, 3, 4, 5)
+    var sex by mutableStateOf("")      // Screen 1
+    var height by mutableStateOf("")    // Screen 3
+    var weight by mutableStateOf("")      // Screen 4
+    var goal by mutableStateOf("")  // Screen 5
 
     // Dato temporal (Screen 2)
     var edad by mutableStateOf("")      // No va a BBDD según tu esquema, pero sirve para cálculos
 
-    // Función final en la Screen 7
+    //Funciones para actualizar los campos
+    fun onSexSelected(selectedSex: String) { sex = selectedSex }
+    fun onHeightChanged(it: String) { height = it }
+    fun onWeightChanged(it: String) { weight = it }
+    fun onGoalSelected(it: String) { goal = it }
+
+    private val auth : FirebaseAuth = Firebase.auth
     fun finalizarRegistro() {
-        // 1. Lógica para crear el usuario en Authentication (Firebase o tu sistema)
-        // 2. Insertar en la tabla USUARIO (nombre, correo, pass)
-        // 3. Insertar en la tabla CLIENTE usando el ID del usuario creado
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnSuccessListener { authResult ->
+                val uid = authResult.user?.uid ?: ""
+                val user = User(
+                    passwd = password,
+                    name = username,
+                    email = email,
+                    role = "CUSTOMER",
+                    dateRegister = System.currentTimeMillis().toString()
+                )
+
+                val customer = Customer(
+                    goal = goal,
+                    weight = weight.toDoubleOrNull() ?: 0.0,
+                    height = height.toIntOrNull() ?: 0,
+                    sex = sex
+                )
+                //llamamos  a la funcion de customer
+                addUserCustomer(user, customer)
+            }
+            .addOnFailureListener { e ->
+                Log.e("Ismael", "Error en Auth: ${e.message}")
+            }
     }
 
     val db = Firebase.firestore
-
-    val sex = MutableStateFlow<String>("")
-
-    // Función para actualizar el valor de sex
-    fun onSexSelected(selectedSex: String) {
-        sex.value = selectedSex
-    }
 
 
     //AÑADIR A LA BBDD un usuario

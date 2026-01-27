@@ -56,17 +56,9 @@ fun ClientScreen1(
     navm: NavigationViewModel,
     pbvm: ProgressBarViewModel
 ) {
-    val sex by rvm.sex.collectAsState()
-
     //PARA LA BARRA DE PROGRESO
 
     // val existe by viewModel.usuarioExiste.observeAsState()
-
-//    LaunchedEffect(existe) {
-//        if (existe == true) {
-//            navController.navigate(Routes.register)
-//        }
-//    }
     RegistrationLayout(pbvm = pbvm, step = 1, {
         Box(modifier = Modifier.fillMaxSize()){
             Column(
@@ -85,24 +77,20 @@ fun ClientScreen1(
                 Spacer(modifier = Modifier.padding(10.dp))
                 Text(text = "Let's set up your profile and start tracking progress", color = colorResource(id = R.color.greyTXT), fontSize = 15.sp)
 
-                MenCard(isSelected = sex == "M") { rvm.onSexSelected("M")}
-                WomenCard(isSelected = sex == "W") { rvm.onSexSelected("W")}
-                OtherCard(isSelected = sex == "O") { rvm.onSexSelected("O")}
+                MenCard(isSelected = rvm.sex == "M") { rvm.onSexSelected("M")}
+                WomenCard(isSelected = rvm.sex == "W") { rvm.onSexSelected("W")}
+                OtherCard(isSelected = rvm.sex == "O") { rvm.onSexSelected("O")}
             }
             //Botón para CONTINUAR
             Button(
                 onClick = {
-                    if (sex.isNotEmpty()) {
                         navController.navigate(Routes.REGISTWO)
-                    } else {
-                        Log.e("ismael", "No has pulsado en ninguna opcion")
-                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
                     .padding(16.dp),
-                enabled = if (sex.isEmpty()) false else true,
+                enabled = rvm.sex.isNotEmpty(),
                 colors = ButtonDefaults.buttonColors(
                     // Color cuando el botón está habilitado
                     containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton
