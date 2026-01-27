@@ -87,7 +87,7 @@ fun UserGridSection() {
             fontSize = 26.sp,
             fontWeight = FontWeight.ExtraBold,
             lineHeight = 32.sp,
-            textAlign = TextAlign.Start
+            textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(30.dp))

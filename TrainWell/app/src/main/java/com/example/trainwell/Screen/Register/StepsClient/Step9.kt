@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -52,34 +53,62 @@ fun ClientScreen9(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 60.dp)
+                .padding(horizontal = 25.dp)
+                .padding(top = 40.dp, bottom = 100.dp), // Espacio para el botón abajo
+            verticalArrangement = Arrangement.SpaceEvenly, // Distribuye el contenido
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Trainwell will help you lead a healthier and happier life", color = Color.White, fontSize = 30.sp)
+            Text(
+                text = "Trainwell will help you lead a healthier and happier life",
+                color = Color.White,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                lineHeight = 34.sp
+            )
+
             Image(
                 painter = painterResource(id = R.drawable.ic_helpmotivimage),
-                contentDescription = null,
+                contentDescription = "Motivation Image",
                 modifier = Modifier
-                    .clip(RoundedCornerShape(5.dp))
+                    .fillMaxWidth()
+                    .height(250.dp) // Tamaño controlado para que no desplace el texto
+                    .clip(RoundedCornerShape(15.dp)), // Bordes un poco más redondeados
+                contentScale = ContentScale.Crop
             )
-            Text(text = "Focus on the progress; the rest will follow.", color = Color.White, fontSize = 30.sp)
 
+            Text(
+                text = "“Focus on the progress; the rest will follow.”",
+                color = colorResource(id = R.color.greenBT), // Color de acento para la cita
+                fontSize = 22.sp,
+                fontStyle = FontStyle.Italic,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(horizontal = 10.dp)
+            )
         }
+
+        // Botón FINALIZAR anclado abajo
         Button(
             onClick = {
-               navController.navigate(Routes.REGISFINAL)
+                navController.navigate(Routes.REGISFINAL)
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .padding(16.dp),
+                .padding(20.dp)
+                .height(56.dp),
             colors = ButtonDefaults.buttonColors(
-                // Color cuando el botón está habilitado
-                containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton
-                contentColor = Color.Black)
+                containerColor = colorResource(id = R.color.greenBT),
+                contentColor = Color.Black
+            ),
+            shape = RoundedCornerShape(12.dp)
         ) {
-            Text("Finish")
+            Text(
+                text = "Continue to Account",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
-
     }
 
 }

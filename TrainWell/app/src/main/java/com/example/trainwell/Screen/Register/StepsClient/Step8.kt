@@ -1,6 +1,7 @@
 package com.example.trainwell.Screen.Register.StepsClient
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -49,57 +51,56 @@ fun ClientScreen8(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 60.dp)
+                .padding(top = 40.dp, start = 20.dp, end = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "How active are you?", color = Color.White, fontSize = 30.sp)
+            Text(
+                text = "How active are you?",
+                color = Color.White,
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                lineHeight = 38.sp
+            )
 
-            OutlinedButton(
-                onClick = {
-                    navController.navigate(Routes.REGISNINE)
-                },
+            Image(
+                painter = painterResource(id = R.drawable.ic_step8),
+                contentDescription = "Training illustration",
                 modifier = Modifier
+                    .height(210.dp)
                     .fillMaxWidth()
+                    .padding(vertical = 10.dp),
+                contentScale = ContentScale.Fit //para no deformar la imagen
+            )
+            Spacer(modifier = Modifier.height(10.dp))
 
-                    .padding(16.dp)
+            // Lista de niveles de actividad
+            val nivelesActividad = listOf(
+                "Sedentary",
+                "Lightly active",
+                "Moderately active",
+                "Very active"
+            )
 
-            ) {
-                Text("Sedentary")
-            }
-            OutlinedButton(
-                onClick = {
-                    navController.navigate(Routes.REGISNINE)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-
-                    .padding(16.dp)
-
-            ) {
-                Text("Lightly active ")
-            }
-            OutlinedButton(
-                onClick = {
-                    navController.navigate(Routes.REGISNINE)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-
-                    .padding(16.dp)
-
-            ) {
-                Text("Moderately active ")
-            }
-            OutlinedButton(
-                onClick = {
-                    navController.navigate(Routes.REGISNINE)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-
-                    .padding(16.dp)
-
-            ) {
-                Text("Very active ")
+            nivelesActividad.forEach { nivel ->
+                OutlinedButton(
+                    onClick = {
+                        // Aquí podrías guardar el nivel en tu rvm (RegisterViewModel)
+                        navController.navigate(Routes.REGISNINE)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    border = BorderStroke(1.dp, colorResource(id = R.color.greenBT)),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(
+                        text = nivel,
+                        fontSize = 18.sp,
+                        modifier = Modifier.padding(vertical = 10.dp)
+                    )
+                }
             }
         }
 

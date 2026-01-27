@@ -132,7 +132,8 @@ fun ClientScreenFinal(navController: NavHostController, viewModel: RegisterViewM
                     username = it
                     usernameError = it.isBlank()
                 },
-                label = { Text(text= "Username", color = colorResource(id=R.color.greyTXT)) },
+                label = { Text(text= "Username", color = colorResource(id=R.color.greyTXT)) }
+                ,
 
                 isError = usernameError,
                 modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
