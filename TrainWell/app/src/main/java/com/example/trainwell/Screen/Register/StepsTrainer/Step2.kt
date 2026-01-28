@@ -39,6 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.trainwell.Routes
 import com.example.trainwell.ViewModel.Register.RegisterViewModel
 
 @Composable
@@ -81,8 +82,6 @@ fun TrainerScreen2(navController: NavHostController, rvm: RegisterViewModel) {
             Box(modifier = Modifier.size(8.dp).clip(CircleShape).background(Color.LightGray))
             Spacer(modifier = Modifier.width(4.dp))
             Box(modifier = Modifier.size(width = 30.dp, height = 8.dp).clip(CircleShape).background(mainGreen))
-            Spacer(modifier = Modifier.width(4.dp))
-            Box(modifier = Modifier.size(8.dp).clip(CircleShape).background(Color.LightGray))
             Spacer(modifier = Modifier.width(4.dp))
             Box(modifier = Modifier.size(8.dp).clip(CircleShape).background(Color.LightGray))
         }
@@ -158,7 +157,7 @@ fun TrainerScreen2(navController: NavHostController, rvm: RegisterViewModel) {
 
         // Botón Continuar
         Button(
-            onClick = { /* Navegar al Step 3 */ },
+            onClick = { navController.navigate(Routes.trainerRegisterStep3) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(55.dp),

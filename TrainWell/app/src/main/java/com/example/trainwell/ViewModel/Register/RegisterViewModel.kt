@@ -40,6 +40,11 @@ class RegisterViewModel: ViewModel() {
     // Datos para la tabla TRAINER
     var especializacionesSeleccionadas = mutableStateListOf<String>()
     var biografia by mutableStateOf("")
+    var precioMensual by mutableStateOf("")
+    //pensar estos dos datos si meter en la bbdd del entrenador
+    var aceptarNuevosClientes by mutableStateOf(false)
+    var cupoMaximo by mutableStateOf("")
+    var diasSeleccionados = mutableStateListOf<String>()
 
     fun toggleEspecializacion(especialidad: String) {
         if (especializacionesSeleccionadas.contains(especialidad)) {

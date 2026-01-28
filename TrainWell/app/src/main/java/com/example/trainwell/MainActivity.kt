@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.trainwell.Screen.Dashboard.ClientScreenDashboard
+import com.example.trainwell.Screen.Dashboard.TrainerScreenDashboard
 import com.example.trainwell.Screen.Login.Login
 import com.example.trainwell.Screen.Register.Auxiliar.ProgressBarViewModel
 import com.example.trainwell.Screen.Register.Register
@@ -23,6 +24,7 @@ import com.example.trainwell.Screen.Register.StepsClient.ClientScreen9
 import com.example.trainwell.Screen.Register.StepsClient.ClientScreenFinal
 import com.example.trainwell.Screen.Register.StepsTrainer.TrainerScreen1
 import com.example.trainwell.Screen.Register.StepsTrainer.TrainerScreen2
+import com.example.trainwell.Screen.Register.StepsTrainer.TrainerScreen3
 import com.example.trainwell.ViewModel.Login.LoginViewModel
 import com.example.trainwell.ViewModel.NavigationViewModel
 import com.example.trainwell.ViewModel.Register.RegisterViewModel
@@ -87,6 +89,12 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(Routes.trainerRegisterStep2) {
                         TrainerScreen2(navController, rvm)
+                    }
+                    composable(Routes.trainerRegisterStep3) {
+                        TrainerScreen3(navController, rvm)
+                    }
+                    composable(Routes.DASHTRAINER) {
+                        TrainerScreenDashboard(navController, rvm)
                     }
                 }
             }
