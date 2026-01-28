@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.compose.runtime.livedata)
+    implementation(libs.androidx.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -70,6 +71,9 @@ dependencies {
     // 2. La librería principal de Auth (ya incluye lo que antes era KTX)
     implementation("com.google.firebase:firebase-auth")
 
-    // 3. (Asegúrate de tener también Firestore si la usas)
+    // 3. Dependencia de Firestore
     implementation("com.google.firebase:firebase-firestore")
+
+    // Dependencia de icons
+    implementation("androidx.compose.material:material-icons-extended")
 }
