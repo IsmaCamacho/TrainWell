@@ -4,7 +4,6 @@ object Routes {
     val login = "Login"
     val register = "Register"
     val clientRegister = "ClientRegister"
-    val trainerRegister = "TrainerRegister"
     val REGISONE = "RegisOne"
     val REGISTWO = "RegisTwo"
     val REGISTHREE = "RegisThree"
@@ -16,4 +15,6 @@ object Routes {
     val REGISNINE = "RegisNine"
     val REGISFINAL = "RegisFinal"
     val DASHCLIENT = "DashClient"
+    val trainerRegister = "TrainerRegister"
+    val trainerRegisterStep2 = "TrainerRegisterStep2"
 }

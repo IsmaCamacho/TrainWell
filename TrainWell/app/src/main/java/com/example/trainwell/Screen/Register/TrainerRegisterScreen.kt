@@ -35,7 +35,7 @@ import com.example.trainwell.Model.Register.User
 import com.example.trainwell.R
 import com.example.trainwell.ViewModel.Register.RegisterViewModel
 import java.time.LocalDateTime
-
+/*
 @Composable
 fun TrainerForm(
     navController: NavHostController,
@@ -231,4 +231,4 @@ fun TrainerForm(
         }
     }
 
-}
+}*/

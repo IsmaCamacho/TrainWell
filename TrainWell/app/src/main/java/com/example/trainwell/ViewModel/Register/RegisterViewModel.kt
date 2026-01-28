@@ -2,6 +2,7 @@ package com.example.trainwell.ViewModel.Register
 
 import android.util.Log
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -23,6 +24,8 @@ class RegisterViewModel: ViewModel() {
     var email by mutableStateOf("")
     var password by mutableStateOf("")
 
+
+
     // Datos para la tabla CUSTOMER (Screens 1, 3, 4, 5)
     var sex by mutableStateOf("")      // Screen 1
     var height by mutableStateOf("")    // Screen 3
@@ -31,6 +34,21 @@ class RegisterViewModel: ViewModel() {
 
     // Dato temporal (Screen 2)
     var edad by mutableStateOf("")      // No va a BBDD según tu esquema, pero sirve para cálculos
+
+
+
+    // Datos para la tabla TRAINER
+    var especializacionesSeleccionadas = mutableStateListOf<String>()
+    var biografia by mutableStateOf("")
+
+    fun toggleEspecializacion(especialidad: String) {
+        if (especializacionesSeleccionadas.contains(especialidad)) {
+            especializacionesSeleccionadas.remove(especialidad)
+        } else {
+            especializacionesSeleccionadas.add(especialidad)
+        }
+    }
+
 
     //Funciones para actualizar los campos
     fun onSexSelected(selectedSex: String) { sex = selectedSex }

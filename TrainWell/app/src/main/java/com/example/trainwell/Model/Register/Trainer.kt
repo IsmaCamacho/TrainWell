@@ -4,5 +4,6 @@ data class Trainer(
     val userId:String = "",
     val biography: String,
     val price: Double,
-    val average: Double? = null
+    val average: Double? = null,
+    var specializations: String
 )

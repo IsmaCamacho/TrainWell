@@ -41,6 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.trainwell.Routes
 import com.example.trainwell.ViewModel.Register.RegisterViewModel
 
 @Composable
@@ -144,7 +145,7 @@ fun TrainerScreen1(navController: NavHostController, rvm: RegisterViewModel) {
 
             // Botón Continuar
             Button(
-                onClick = { /* Navegar al paso 2 */ },
+                onClick = { navController.navigate(Routes.trainerRegisterStep2) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(55.dp),
