@@ -15,6 +15,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.flow.MutableStateFlow
 
 
 class RegisterViewModel: ViewModel() {
@@ -45,6 +46,10 @@ class RegisterViewModel: ViewModel() {
     var aceptarNuevosClientes by mutableStateOf(false)
     var cupoMaximo by mutableStateOf("")
     var diasSeleccionados = mutableStateListOf<String>()
+
+    // Estados para controlar si existe el usuario al registrarse
+    var showErrorDialog by mutableStateOf(false)
+    var registroExitoso = MutableStateFlow(false)
 
     fun toggleEspecializacion(especialidad: String) {
         if (especializacionesSeleccionadas.contains(especialidad)) {
@@ -82,10 +87,14 @@ class RegisterViewModel: ViewModel() {
                 )
                 //llamamos  a la funcion de customer
                 addUserCustomer(user, customer)
+                registroExitoso.value = true
             }
             .addOnFailureListener { e ->
                 Log.e("Ismael", "Error en Auth: ${e.message}")
+                showErrorDialog = true
+
             }
+
     }
 
     val db = Firebase.firestore

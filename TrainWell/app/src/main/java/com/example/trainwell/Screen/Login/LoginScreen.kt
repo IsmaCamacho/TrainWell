@@ -1,5 +1,6 @@
 package com.example.trainwell.Screen.Login
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -73,7 +74,9 @@ fun Login(
 
     LaunchedEffect(existe) {
         if (existe == true) {
-            navController.navigate(Routes.register)
+            // navController.navigate(Routes.register)
+            Toast.makeText(context,"Login correcto", Toast.LENGTH_SHORT).show()
+            navController.navigate(Routes.DASHCLIENT)
         }
     }
     Box(
