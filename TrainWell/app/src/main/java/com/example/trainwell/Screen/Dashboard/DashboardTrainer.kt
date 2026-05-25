@@ -20,12 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.trainwell.ViewModel.Register.RegisterViewModel
-
-// Colores personalizados basados en la imagen
-val DarkBackground = Color(0xFF0A120A)
-val CardBackground = Color(0xFF162216)
-val PrimaryGreen = Color(0xFF1ED760)
-val TextGray = Color(0xFFB3B3B3)
+import com.example.trainwell.ui.theme.DarkBackground
+import com.example.trainwell.ui.theme.CardBackground
+import com.example.trainwell.ui.theme.PrimaryGreen
+import com.example.trainwell.ui.theme.TextGray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -201,23 +199,6 @@ fun StatCard(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(subValue, fontSize = 12.sp, color = PrimaryGreen)
             }
-        }
-    }
-}
-
-@Composable
-fun SectionHeader(title: String, actionText: String?, showAddIcon: Boolean = false) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(title, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
-        if (actionText != null) {
-            Text(actionText, color = PrimaryGreen, fontSize = 14.sp)
-        }
-        if (showAddIcon) {
-            Icon(Icons.Default.AddCircle, contentDescription = null, tint = Color.DarkGray)
         }
     }
 }

@@ -24,13 +24,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-
-
-// Colores personalizados basados en la imagen
-val DarkBackground = Color(0xFF0A120A)
-val CardBackground = Color(0xFF162216)
-val PrimaryGreen = Color(0xFF1ED760)
-val TextGray = Color(0xFFB3B3B3)
+import com.example.trainwell.ui.theme.DarkBackground
+import com.example.trainwell.ui.theme.CardBackground
+import com.example.trainwell.ui.theme.PrimaryGreen
+import com.example.trainwell.ui.theme.TextGray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
