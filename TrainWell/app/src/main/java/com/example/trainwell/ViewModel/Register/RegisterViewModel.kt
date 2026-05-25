@@ -25,6 +25,10 @@ class RegisterViewModel: ViewModel() {
     var email by mutableStateOf("")
     var password by mutableStateOf("")
 
+    var price by mutableStateOf("")
+    var averages by mutableStateOf("")
+
+
 
 
     // Datos para la tabla CUSTOMER (Screens 1, 3, 4, 5)
@@ -95,6 +99,41 @@ class RegisterViewModel: ViewModel() {
 
             }
 
+    }
+
+    // Función similar a finalizarRegistro() pero para Entrenadores
+    fun finalizarRegistroEntrenador() {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnSuccessListener { authResult ->
+                // 1. Creamos el usuario general con rol TRAINER
+                val user = User(
+                    passwd = password,
+                    name = username,
+                    email = email,
+                    role = "TRAINER",
+                    dateRegister = System.currentTimeMillis().toString()
+                )
+
+                // 2. Creamos el objeto Trainer con los datos que hemos ido recolectando
+                // Convertimos las listas mutables a listas normales (.toList())
+                val trainer = Trainer(
+                    biography = biografia,
+                    price = price.toDoubleOrNull() ?: 0.0,
+                    average = averages.toDoubleOrNull() ?: 0.0,
+                    specializations = especializacionesSeleccionadas.joinToString(", ")
+
+                )
+
+                // 3. Llamamos a tu función existente que ya separa la lógica en Firestore
+                addUserTrainer(user, trainer)
+
+                // 4. Marcamos éxito para que la UI reaccione y navegue
+                registroExitoso.value = true
+            }
+            .addOnFailureListener { e ->
+                Log.e("Ismael", "Error en Auth Trainer: ${e.message}")
+                showErrorDialog = true
+            }
     }
 
     val db = Firebase.firestore

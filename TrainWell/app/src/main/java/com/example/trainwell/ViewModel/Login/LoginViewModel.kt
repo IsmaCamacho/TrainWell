@@ -34,6 +34,7 @@ class LoginViewModel: ViewModel(){
                 //guardo en el object los datos que voy a utilizar despues
                 Data.idUser = result.documents.first().id  //quiero el documento para saber de quien es el id del user
                 Data.emailUser = userLogin.email
+                Data.role = result.documents.first().get("role").toString()
             }else{
                 Log.d("Ismael", "FALLO: No coincide email o contraseña.")
                 _usuarioExiste.value=false

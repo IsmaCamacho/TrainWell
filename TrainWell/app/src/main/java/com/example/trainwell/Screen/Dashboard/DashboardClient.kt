@@ -24,6 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import com.example.trainwell.R
 import com.example.trainwell.ui.theme.DarkBackground
 import com.example.trainwell.ui.theme.CardBackground
 import com.example.trainwell.ui.theme.PrimaryGreen
@@ -40,9 +42,13 @@ fun ClientDashboardScreen(navController: NavHostController) {
                 title = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Image(
-                            painter = painterResource(id = android.R.drawable.ic_menu_gallery), // Sustituir por tu recurso
+                            painter = painterResource(id = R.drawable.ic_men),
                             contentDescription = null,
-                            modifier = Modifier.size(40.dp).clip(CircleShape).background(Color.Gray)
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .size(40.dp)
+                                .background(Color.Gray),
+                            contentScale = ContentScale.Crop
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Column {
@@ -130,10 +136,34 @@ fun ClientDashboardScreen(navController: NavHostController) {
             }
 
             // 4. ENTRENADORES DESTACADOS
+            // 4. ENTRENADORES DESTACADOS
             item {
                 SectionHeader(title = "Entrenadores Destacados", actionText = "Ver todos")
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                    items(3) { FeaturedCoachItem() }
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    contentPadding = PaddingValues(top = 12.dp)
+                ) {
+                    item {
+                        FeaturedCoachItem(
+                            nombre = "Carlos Fit",
+                            especialidad = "Espec. en Hipertrofia",
+                            image = R.drawable.ic_trainer
+                        )
+                    }
+                    item {
+                        FeaturedCoachItem(
+                            nombre = "Ana Yoga",
+                            especialidad = "Yoga & Movilidad",
+                            image = R.drawable.ic_trainer2
+                        )
+                    }
+                    item {
+                        FeaturedCoachItem(
+                            nombre = "Juan Power",
+                            especialidad = "Powerlifting & Fuerza",
+                            image = R.drawable.ic_trainer1
+                        )
+                    }
                 }
             }
 
@@ -206,7 +236,7 @@ fun TodayWorkoutCard() {
             Box(modifier = Modifier.height(180.dp).fillMaxWidth()) {
                 // Imagen de fondo del ejercicio
                 Image(
-                    painter = painterResource(id = android.R.drawable.ic_dialog_info), // Sustituir
+                    painter = painterResource(id = R.drawable.ic_loginimage),
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
@@ -269,11 +299,22 @@ fun QuickActionItem(text: String, icon: ImageVector, modifier: Modifier) {
 }
 
 @Composable
-fun FeaturedCoachItem() {
+fun FeaturedCoachItem(nombre: String, especialidad: String, image: Int) {
     Column(modifier = Modifier.width(160.dp)) {
-        Box(modifier = Modifier.height(200.dp).clip(RoundedCornerShape(16.dp)).background(Color.Gray)) {
-            // Imagen del Coach
-            Text("Image", modifier = Modifier.align(Alignment.Center))
+        Box(modifier = Modifier
+            .height(200.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(Color.DarkGray)
+        ) {
+            // Imagen Real con Coil
+            AsyncImage(
+                model = image,
+                contentDescription = nombre,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+                placeholder = painterResource(id = android.R.drawable.ic_menu_gallery),
+                error = painterResource(id = android.R.drawable.ic_menu_report_image)
+            )
 
             // Badge Pro
             Surface(
@@ -281,11 +322,26 @@ fun FeaturedCoachItem() {
                 modifier = Modifier.align(Alignment.BottomStart).padding(8.dp),
                 shape = RoundedCornerShape(4.dp)
             ) {
-                Text("Pro", color = Color.Black, fontSize = 10.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 4.dp))
+                Text(
+                    text = "Pro",
+                    color = Color.Black,
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 4.dp)
+                )
             }
         }
-        Text("Carlos Fit", color = Color.White, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 8.dp))
-        Text("Espec. en Hipertrofia", color = TextGray, fontSize = 12.sp)
+        Text(
+            text = nombre,
+            color = Color.White,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(top = 8.dp)
+        )
+        Text(
+            text = especialidad,
+            color = TextGray,
+            fontSize = 12.sp
+        )
     }
 }
 

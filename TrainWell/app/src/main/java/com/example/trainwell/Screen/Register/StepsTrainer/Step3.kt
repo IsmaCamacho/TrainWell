@@ -203,7 +203,7 @@ fun TrainerScreen3(navController: NavHostController, rvm: RegisterViewModel) {
         // Botón FINALIZAR REGISTRO
         Button(
             onClick = {
-//                rvm.finalizarRegistroEntrenador()
+                rvm.finalizarRegistroEntrenador()
                 navController.navigate(Routes.DASHTRAINER) {
                     popUpTo(Routes.trainerRegisterStep3) { inclusive = true } //el inclusive borra toda la memoria anterior
                 }

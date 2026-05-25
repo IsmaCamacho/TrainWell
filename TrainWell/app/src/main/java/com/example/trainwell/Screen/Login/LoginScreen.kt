@@ -25,6 +25,7 @@ import androidx.compose.material3.Label
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -54,6 +55,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.trainwell.Data
 import com.example.trainwell.Model.Login.Login
 import com.example.trainwell.R
 import com.example.trainwell.Routes
@@ -74,9 +76,16 @@ fun Login(
 
     LaunchedEffect(existe) {
         if (existe == true) {
-            // navController.navigate(Routes.register)
             Toast.makeText(context,"Login correcto", Toast.LENGTH_SHORT).show()
-            navController.navigate(Routes.DASHCLIENT)
+            if (Data.role == "TRAINER") {
+                navController.navigate(Routes.DASHTRAINER) {
+                    popUpTo(Routes.login) { inclusive = true }
+                }
+            } else if (Data.role == "CUSTOMER") {
+                navController.navigate(Routes.DASHCLIENT) {
+                    popUpTo(Routes.login) { inclusive = true }
+                }
+            }
         }
     }
     Box(
@@ -136,10 +145,15 @@ fun Login(
                     emailError = it.isBlank()
                 },
                 label = { Text(text= "Email", color = colorResource(id=R.color.greyTXT)) },
-
                 isError = emailError,
                 modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
-                singleLine = true
+                singleLine = true,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedBorderColor = colorResource(id = R.color.greenBT),
+                    unfocusedBorderColor = colorResource(id = R.color.greyTXT)
+                )
 
             )
             if (emailError) {
@@ -161,7 +175,13 @@ fun Login(
                 isError = passwdError,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedBorderColor = colorResource(id = R.color.greenBT),
+                    unfocusedBorderColor = colorResource(id = R.color.greyTXT)
+                )
             )
             if (passwdError) {
                 Text(
