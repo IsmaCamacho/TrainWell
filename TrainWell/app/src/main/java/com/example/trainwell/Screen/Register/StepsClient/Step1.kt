@@ -85,6 +85,7 @@ fun ClientScreen1(
             Button(
                 onClick = {
                         navController.navigate(Routes.REGISTWO)
+                    // navController.navigate(Routes.DASHCLIENT)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
