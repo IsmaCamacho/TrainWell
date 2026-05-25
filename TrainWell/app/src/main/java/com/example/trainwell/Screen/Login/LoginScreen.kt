@@ -17,10 +17,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Label
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -51,6 +55,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -73,6 +79,7 @@ fun Login(
     var passwdError by remember { mutableStateOf(false) }
     val existe by viewModel.usuarioExiste.observeAsState()
     val focusRequester = remember { FocusRequester() }
+    var passwordVisible by remember { mutableStateOf(false) }
 
     LaunchedEffect(existe) {
         if (existe == true) {
@@ -171,11 +178,29 @@ fun Login(
                     passwd = it
                     passwdError = it.isBlank()
                 },
-                label = { Text("Password", color = colorResource(id=R.color.greyTXT)) },
+                label = { Text("Password", color = colorResource(id = R.color.greyTXT)) },
                 isError = passwdError,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+
+                //Aqui controlamos si quiere la contrasñea visible o no
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+
+                // 3. Añadimos el icono del ojo en la parte derecha (Trailing Icon)
+                trailingIcon = {
+                    val image = if (passwordVisible) {
+                        Icons.Default.Visibility
+                    } else {
+                        Icons.Default.VisibilityOff
+                    }
+
+                    val description = if (passwordVisible) "Hide password" else "Show password"
+
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(imageVector = image, contentDescription = description, tint = colorResource(id = R.color.greyTXT))
+                    }
+                },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White,

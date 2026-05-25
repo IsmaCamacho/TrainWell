@@ -149,7 +149,8 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedTextColor = Color.White,   // Color mientras escribe
                     unfocusedTextColor = Color.White, // Color cuando no está seleccionado
-                    cursorColor = Color.White         // Color de la barra de escritura
+                    cursorColor = Color.White ,        // Color de la barra de escritura
+                    errorTextColor = Color.White
                 ),
                 isError = usernameError,
                 modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
@@ -176,7 +177,8 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedTextColor = Color.White,   // Color mientras escribe
                     unfocusedTextColor = Color.White, // Color cuando no está seleccionado
-                    cursorColor = Color.White         // Color de la barra de escritura
+                    cursorColor = Color.White,         // Color de la barra de escritura
+                    errorTextColor = Color.White
                 ),
                 modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
                 singleLine = true
@@ -203,7 +205,8 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedTextColor = Color.White,   // Color mientras escribe
                     unfocusedTextColor = Color.White, // Color cuando no está seleccionado
-                    cursorColor = Color.White         // Color de la barra de escritura
+                    cursorColor = Color.White,         // Color de la barra de escritura
+                    errorTextColor = Color.White
                 ),
                 singleLine = true,
                 visualTransformation = if (passwordVisible)

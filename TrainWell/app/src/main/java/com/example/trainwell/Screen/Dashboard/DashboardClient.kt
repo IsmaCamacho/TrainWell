@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.trainwell.R
+import com.example.trainwell.ViewModel.Login.LoginViewModel
+import com.example.trainwell.ViewModel.Register.RegisterViewModel
 import com.example.trainwell.ui.theme.DarkBackground
 import com.example.trainwell.ui.theme.CardBackground
 import com.example.trainwell.ui.theme.PrimaryGreen
@@ -33,7 +35,7 @@ import com.example.trainwell.ui.theme.TextGray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ClientDashboardScreen(navController: NavHostController) {
+fun ClientDashboardScreen(navController: NavHostController, username: String) {
     Scaffold(
         containerColor = DarkBackground,
         topBar = {
@@ -52,7 +54,12 @@ fun ClientDashboardScreen(navController: NavHostController) {
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Column {
-                            Text("Hola, Alex 👋", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                            Text(
+                                text = "Hola, $username 👋",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = TextGray
+                            )
                             Text("¡A por todas hoy!", color = TextGray, fontSize = 12.sp)
                         }
                     }

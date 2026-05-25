@@ -33,7 +33,6 @@ import com.example.trainwell.ui.theme.TrainWellTheme
 
 class MainActivity : ComponentActivity() {
 
-//    val auth = Firebase.auth
     val lvm = LoginViewModel()
     val rvm = RegisterViewModel()
     val navm = NavigationViewModel()
@@ -83,7 +82,8 @@ class MainActivity : ComponentActivity() {
                         ClientScreenFinal(navController, rvm)
                     }
                     composable(Routes.DASHCLIENT) {
-                        ClientDashboardScreen(navController)
+                        val finalUsername = if (lvm.username.isNotBlank()) lvm.username else rvm.username
+                        ClientDashboardScreen(navController = navController, username = finalUsername)
                     }
                     composable(Routes.trainerRegister) {
                         TrainerScreen1(navController, rvm)
@@ -95,7 +95,9 @@ class MainActivity : ComponentActivity() {
                         TrainerScreen3(navController, rvm)
                     }
                     composable(Routes.DASHTRAINER) {
-                        TrainerScreenDashboard(navController, rvm)
+                        val finalUsername = lvm.username.ifBlank { rvm.username }
+
+                        TrainerScreenDashboard(navController = navController, username = finalUsername)
                     }
                 }
             }
