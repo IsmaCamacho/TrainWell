@@ -16,10 +16,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -29,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -50,6 +56,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -67,14 +75,20 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
     var emailError by remember { mutableStateOf(false) }
     var usernameError by remember { mutableStateOf(false) }
     var passwdError by remember { mutableStateOf(false) }
-//    val existe by viewModel.usuarioExiste.observeAsState()
+    var passwordVisible by remember { mutableStateOf(false) }
+    val registroExitoso by rvm.registroExitoso.collectAsState()
     val focusRequester = remember { FocusRequester() }
 
-//    LaunchedEffect(existe) {
-//        if (existe == true) {
-//            navController.navigate(Routes.register)
-//        }
-//    }
+    LaunchedEffect(registroExitoso) {
+        if (registroExitoso) {
+            navController.navigate(Routes.DASHCLIENT) {
+                popUpTo(Routes.REGISFINAL) { inclusive = true }
+            }
+            // Resetear el estado para que no vuelva a navegar al entrar de nuevo
+            rvm.registroExitoso.value = false
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -155,7 +169,7 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
                 value = rvm.email,
                 onValueChange = {
                     rvm.email = it
-                    emailError = it.isBlank()
+                    emailError = it.isBlank() || !isValidEmail(it)
                 },
                 label = { Text(text= "Email", color = colorResource(id=R.color.greyTXT)) },
                 isError = emailError,
@@ -170,7 +184,7 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
 
             if (emailError) {
                 Text(
-                    text = "Email cannot be empty",
+                    text = "Email cannot be empty or invalid",
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall
                 )
@@ -181,7 +195,7 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
                 value = rvm.password,
                 onValueChange = {
                     rvm.password = it
-                    passwdError = it.isBlank()
+                    passwdError = it.isBlank() || it.length < 6
                 },
                 label = { Text("Password", color = colorResource(id=R.color.greyTXT)) },
                 isError = passwdError,
@@ -192,6 +206,22 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
                     cursorColor = Color.White         // Color de la barra de escritura
                 ),
                 singleLine = true,
+                visualTransformation = if (passwordVisible)
+                    VisualTransformation.None
+                else
+                    PasswordVisualTransformation(),
+                trailingIcon = {
+                    val image = if (passwordVisible)
+                        Icons.Default.Visibility
+                    else Icons.Default.VisibilityOff
+
+                    IconButton(onClick = {
+                        passwordVisible = !passwordVisible
+                    }) {
+                        Icon(imageVector = image, "")
+                    }
+                },
+
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
 
@@ -222,13 +252,10 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
 
                         rvm.finalizarRegistro()  //lo añade a la bbdd
 
-                        navController.navigate(Routes.DASHCLIENT){
-                            popUpTo(Routes.REGISFINAL) { inclusive = true } //el inclusive es que limpia ya el historial de registro
-                        }
                     } else {
                         usernameError = rvm.username.isBlank()
-                        emailError = rvm.email.isBlank()
-                        passwdError = rvm.password.isBlank()
+                        emailError = rvm.email.isBlank() || !isValidEmail(rvm.email)
+                        passwdError = rvm.password.isBlank() || rvm.password.length < 6
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -243,7 +270,20 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
             ) {
                 Text("Create Account")
             }
-
+            if (rvm.showErrorDialog) {
+                AlertDialog(
+                    onDismissRequest = { rvm.showErrorDialog = false },
+                    confirmButton = {
+                        TextButton(
+                            onClick = { rvm.showErrorDialog = false }
+                        ) {
+                            Text("Accept")
+                        }
+                    },
+                    title = { Text("Error") },
+                    text = { Text("This account already exists") }
+                )
+            }
             Spacer(modifier = Modifier.padding(10.dp))
 
             Text(
@@ -300,4 +340,8 @@ fun BtFacebook(onClick: () -> Unit) {
             Text(text = "Facebook", color = Color.White)
         }
     }
+}
+
+fun isValidEmail(email:String): Boolean {
+    return email.endsWith("@gmail.com") || email.endsWith("@outlook.com") || email.endsWith("@hotmail.com")
 }

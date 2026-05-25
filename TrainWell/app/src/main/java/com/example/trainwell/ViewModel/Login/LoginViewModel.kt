@@ -32,7 +32,7 @@ class LoginViewModel: ViewModel(){
                 Log.d("Ismael", "Usuario encontrado. ID: ${result.documents.first().id}")
                 _usuarioExiste.value=true
                 //guardo en el object los datos que voy a utilizar despues
-                Data.idUser = result.documents.first().id  //quiero el documento para al agregar la nota saber de quien es el id del user
+                Data.idUser = result.documents.first().id  //quiero el documento para saber de quien es el id del user
                 Data.emailUser = userLogin.email
             }else{
                 Log.d("Ismael", "FALLO: No coincide email o contraseña.")
