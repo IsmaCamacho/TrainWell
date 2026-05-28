@@ -101,8 +101,8 @@ fun Login(
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        colorResource(id = R.color.greenBG2), //verde mas clarito
-                        colorResource(id = R.color.greenBG) // verde mas oscuro
+                        colorResource(id = R.color.greenBG2),
+                        colorResource(id = R.color.greenBG)
                     )
                 )
             )
@@ -113,21 +113,20 @@ fun Login(
             contentScale = ContentScale.FillHeight,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(450.dp) // Ajusta según tu diseño
+                .height(450.dp)
                 .graphicsLayer { alpha = 0.99f }
                 .drawWithContent {
                     drawContent()
                     drawRect(
                         brush = Brush.verticalGradient(
-                            // INVERTIMOS: Sólido arriba (Blanco/Negro) y Transparente abajo
                             colors = listOf(
-                                Color.Black,       // Parte superior (se ve la imagen)
-                                Color.Transparent  // Parte inferior (se difumina)
+                                Color.Black,
+                                Color.Transparent
                             ),
-                            startY = size.height * 0.5f, // Empezamos a difuminar a la mitad
-                            endY = size.height           // Terminamos en el borde inferior
+                            startY = size.height * 0.5f,
+                            endY = size.height
                         ),
-                        blendMode = BlendMode.DstIn // Aplica la transparencia del brush a la imagen
+                        blendMode = BlendMode.DstIn
                     )
                 }
         )
@@ -187,7 +186,7 @@ fun Login(
                 //Aqui controlamos si quiere la contrasñea visible o no
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
 
-                // 3. Añadimos el icono del ojo en la parte derecha (Trailing Icon)
+                // Añadimos el icono del ojo en la parte derecha
                 trailingIcon = {
                     val image = if (passwordVisible) {
                         Icons.Default.Visibility
@@ -229,7 +228,7 @@ fun Login(
                 onClick = {
                     if (email.isNotBlank() && passwd.isNotBlank()) {
                         var user = Login(email, passwd)
-                        viewModel.getUser(user)  //llamamos al viewmodel y le pasamos el usuario
+                        viewModel.getUser(user)
                         emailError = false
                         passwdError = false
                         focusRequester.requestFocus() //Devuelve el foco a la caja de texto nombre.
@@ -242,10 +241,10 @@ fun Login(
                 enabled = email.isNotBlank() && passwd.isNotBlank(),
                 colors = ButtonDefaults.buttonColors(
                     // Color cuando el botón está habilitado
-                    containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton
+                    containerColor = colorResource(id = R.color.greenBT),
                     contentColor = Color.Black,
                     // Color cuando el botón NO está habilitado
-                    disabledContainerColor = colorResource(id = R.color.greenCard), //color de fondo del boton
+                    disabledContainerColor = colorResource(id = R.color.greenCard),
                     disabledContentColor = Color.Black)
             ) {
                 Text("Log in")
@@ -278,7 +277,7 @@ fun Login(
                 )
                 TextButton(
                     onClick = {
-                        navController.navigate(Routes.register) //irse al formulario de registro
+                        navController.navigate(Routes.register)
                     }
                 ) {
                     Text(
@@ -302,7 +301,7 @@ fun BtGoogle(onClick: () -> Unit) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_google), //logo descargado
+                painter = painterResource(id = R.drawable.ic_google),
                 contentDescription = "Google Logo",
                 tint = Color.Unspecified,
                 modifier = Modifier.size(18.dp)

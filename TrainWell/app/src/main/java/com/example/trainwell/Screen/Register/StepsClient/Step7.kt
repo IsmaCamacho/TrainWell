@@ -52,14 +52,14 @@ fun ClientScreen7(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 100.dp, start = 20.dp, end = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp), // Un poco más de espacio entre botones
+            verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = "Any previous training experience?",
                 color = Color.White,
                 fontSize = 30.sp,
-                lineHeight = 36.sp, // Mejor lectura en títulos largos
+                lineHeight = 36.sp,
                 textAlign = TextAlign.Center
             )
             Image(
@@ -69,11 +69,10 @@ fun ClientScreen7(
                     .height(180.dp)
                     .fillMaxWidth()
                     .padding(vertical = 10.dp),
-                contentScale = ContentScale.Fit //para no deformar la imagen
+                contentScale = ContentScale.Fit
             )
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Lista de opciones para no repetir código (DRY: Don't Repeat Yourself)
             val opciones = listOf(
                 "Yes, I train regularly",
                 "Yes, less than a year ago",
@@ -85,9 +84,9 @@ fun ClientScreen7(
                 OutlinedButton(
                     onClick = { navController.navigate(Routes.REGISEIGHT) },
                     modifier = Modifier.fillMaxWidth(),
-                    border = BorderStroke(1.dp, colorResource(id = R.color.greenBT)), // Borde verde
+                    border = BorderStroke(1.dp, colorResource(id = R.color.greenBT)),
                     colors = ButtonDefaults.outlinedButtonColors(
-                        contentColor = Color.White // Texto en blanco para que se lea bien
+                        contentColor = Color.White
                     )
                 ) {
                     Text(

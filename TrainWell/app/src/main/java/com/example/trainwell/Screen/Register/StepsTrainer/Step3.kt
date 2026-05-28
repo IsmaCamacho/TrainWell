@@ -65,7 +65,6 @@ fun TrainerScreen3(navController: NavHostController, rvm: RegisterViewModel) {
             .background(Color.White)
             .padding(20.dp)
     ) {
-        // Cabecera
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -85,7 +84,6 @@ fun TrainerScreen3(navController: NavHostController, rvm: RegisterViewModel) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // Stepper (Paso 3 de 3)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
@@ -109,7 +107,6 @@ fun TrainerScreen3(navController: NavHostController, rvm: RegisterViewModel) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        //Precio mensual
         Text(text = "Monthly price (€)", color = mainGreen, fontWeight = FontWeight.Bold, fontSize = 14.sp)
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
@@ -183,7 +180,6 @@ fun TrainerScreen3(navController: NavHostController, rvm: RegisterViewModel) {
             }
         }
 
-        // Aviso de comisión (Cuadro informativo verde)
         Spacer(Modifier.height(25.dp))
         Card(
             shape = RoundedCornerShape(20.dp),
@@ -205,7 +201,7 @@ fun TrainerScreen3(navController: NavHostController, rvm: RegisterViewModel) {
             onClick = {
                 rvm.finalizarRegistroEntrenador()
                 navController.navigate(Routes.DASHTRAINER) {
-                    popUpTo(Routes.trainerRegisterStep3) { inclusive = true } //el inclusive borra toda la memoria anterior
+                    popUpTo(Routes.trainerRegisterStep3) { inclusive = true }
                 }
             },
             modifier = Modifier

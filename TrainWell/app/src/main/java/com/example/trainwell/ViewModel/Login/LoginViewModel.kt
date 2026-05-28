@@ -30,7 +30,6 @@ class LoginViewModel: ViewModel(){
                 .get()
                 .await()
 
-            //si devuelve un usuario es porque existe
             if(!result.isEmpty){
                 Log.d("Ismael", "Usuario encontrado. ID: ${result.documents.first().id}")
                 _usuarioExiste.value=true

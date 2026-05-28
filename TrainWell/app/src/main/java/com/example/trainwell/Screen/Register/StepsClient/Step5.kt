@@ -48,7 +48,7 @@ fun ClientScreen5(
     pbvm: ProgressBarViewModel,
     rvm: RegisterViewModel
 ) {
-    //PARA LA BARRA DE PROGRESO
+    // BARRA DE PROGRESO
     RegistrationLayout(pbvm = pbvm, step = 5, {
         Box(modifier = Modifier.fillMaxSize()){
             Column(
@@ -80,10 +80,10 @@ fun ClientScreen5(
                 enabled = rvm.goal.isNotEmpty(),
                 colors = ButtonDefaults.buttonColors(
                     // Color cuando el botón está habilitado
-                    containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton
+                    containerColor = colorResource(id = R.color.greenBT),
                     contentColor = Color.Black,
                     // Color cuando el botón NO está habilitado
-                    disabledContainerColor = colorResource(id = R.color.greenCard), //color de fondo del boton
+                    disabledContainerColor = colorResource(id = R.color.greenCard),
                     disabledContentColor = Color.Black)
             ) {
                 Text("Continue")

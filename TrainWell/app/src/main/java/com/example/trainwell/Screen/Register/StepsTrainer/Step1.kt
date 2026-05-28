@@ -46,7 +46,6 @@ import com.example.trainwell.ViewModel.Register.RegisterViewModel
 
 @Composable
 fun TrainerScreen1(navController: NavHostController, rvm: RegisterViewModel) {
-    // Colores del diseño
     val lightGreenBG = Color(0xFFE8F5E9)
     val mainGreen = Color(0xFF22E67B)
 
@@ -55,7 +54,6 @@ fun TrainerScreen1(navController: NavHostController, rvm: RegisterViewModel) {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // Cabecera con fondo verde clarito
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -134,7 +132,6 @@ fun TrainerScreen1(navController: NavHostController, rvm: RegisterViewModel) {
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            // Campos de entrada (Sin teléfono)
             TrainerInputField(label = "Username", value = rvm.username, icon = Icons.Default.Badge) { rvm.username = it }
             Spacer(modifier = Modifier.height(16.dp))
             TrainerInputField(label = "Email", value = rvm.email, icon = Icons.Default.Email) { rvm.email = it }
@@ -143,7 +140,6 @@ fun TrainerScreen1(navController: NavHostController, rvm: RegisterViewModel) {
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Botón Continuar
             Button(
                 onClick = { navController.navigate(Routes.trainerRegisterStep2) },
                 modifier = Modifier

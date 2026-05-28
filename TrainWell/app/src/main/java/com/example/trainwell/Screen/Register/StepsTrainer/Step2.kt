@@ -50,10 +50,9 @@ fun TrainerScreen2(navController: NavHostController, rvm: RegisterViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF8F9FA)) // Fondo casi blanco/grisáceo muy claro
+            .background(Color(0xFFF8F9FA))
             .padding(20.dp)
     ) {
-        // Cabecera sencilla
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -73,7 +72,6 @@ fun TrainerScreen2(navController: NavHostController, rvm: RegisterViewModel) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // Stepper (Paso 2 de 4)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
@@ -100,23 +98,17 @@ fun TrainerScreen2(navController: NavHostController, rvm: RegisterViewModel) {
 
         Text(text = "Areas of specialization", color = mainGreen, fontWeight = FontWeight.Bold, fontSize = 14.sp)
 
-        // Contenedor de Chips (FlowRow para que salten de línea solos)
-        // Nota: FlowRow requiere la dependencia de layouts o usar una alternativa manual
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Implementación manual simplificada de los chips
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            // Fila 1
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 SpecialtyChip("Bodybuilding", rvm)
                 SpecialtyChip("Yoga", rvm)
             }
-            // Fila 2
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 SpecialtyChip("Sports nutrition", rvm)
                 SpecialtyChip("CrossFit", rvm)
             }
-            // Fila 3
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 SpecialtyChip("Running", rvm)
                 SpecialtyChip("Pilates", rvm)
@@ -129,7 +121,6 @@ fun TrainerScreen2(navController: NavHostController, rvm: RegisterViewModel) {
         Text(text = "Experience and biography", color = mainGreen, fontWeight = FontWeight.Bold, fontSize = 14.sp)
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Campo de texto grande (Bio)
         OutlinedTextField(
             value = rvm.biografia,
             onValueChange = { if (it.length <= 500) rvm.biografia = it },
@@ -155,7 +146,6 @@ fun TrainerScreen2(navController: NavHostController, rvm: RegisterViewModel) {
 
         Spacer(modifier = Modifier.weight(1f))
 
-        // Botón Continuar
         Button(
             onClick = { navController.navigate(Routes.trainerRegisterStep3) },
             modifier = Modifier

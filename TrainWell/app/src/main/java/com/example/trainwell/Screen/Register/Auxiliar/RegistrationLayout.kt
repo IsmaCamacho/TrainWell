@@ -40,7 +40,7 @@ fun RegistrationLayout(
                 )
             )
     ) {
-        // La barra de progreso
+        // Barra de progreso
         LinearProgressIndicator(
             progress = { pbvm.currentProgress },
             modifier = Modifier
@@ -52,15 +52,14 @@ fun RegistrationLayout(
             trackColor = Color.DarkGray
         )
 
-        // Aquí se "inyecta" el contenido de tu pantalla
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
                     brush = Brush.verticalGradient(
                         colors = listOf(
-                            colorResource(id = R.color.greenBG2), //verde mas clarito
-                            colorResource(id = R.color.greenBG) // verde mas oscuro
+                            colorResource(id = R.color.greenBG2),
+                            colorResource(id = R.color.greenBG)
                         )
                     )
                 )

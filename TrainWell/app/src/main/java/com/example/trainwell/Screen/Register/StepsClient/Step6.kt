@@ -61,10 +61,10 @@ fun ClientScreen6(
                 .padding(16.dp),
             colors = ButtonDefaults.buttonColors(
                 // Color cuando el botón está habilitado
-                containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton
+                containerColor = colorResource(id = R.color.greenBT),
                 contentColor = Color.Black,
                 // Color cuando el botón NO está habilitado
-                disabledContainerColor = colorResource(id = R.color.greenCard), //color de fondo del boton
+                disabledContainerColor = colorResource(id = R.color.greenCard),
                 disabledContentColor = Color.Black)
         ) {
             Text("Continue")

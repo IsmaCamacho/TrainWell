@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class RegisterViewModel: ViewModel() {
 
-    //Datos para la tabla user (screenStepFinal)
     var username by mutableStateOf("")
     var email by mutableStateOf("")
     var password by mutableStateOf("")
@@ -31,14 +30,11 @@ class RegisterViewModel: ViewModel() {
 
 
 
-    // Datos para la tabla CUSTOMER (Screens 1, 3, 4, 5)
-    var sex by mutableStateOf("")      // Screen 1
-    var height by mutableStateOf("")    // Screen 3
-    var weight by mutableStateOf("")      // Screen 4
-    var goal by mutableStateOf("")  // Screen 5
+    var sex by mutableStateOf("")
+    var height by mutableStateOf("")
+    var weight by mutableStateOf("")
+    var goal by mutableStateOf("")
 
-    // Dato temporal (Screen 2)
-    var edad by mutableStateOf("")      // No va a BBDD según tu esquema, pero sirve para cálculos
 
 
 
@@ -46,12 +42,11 @@ class RegisterViewModel: ViewModel() {
     var especializacionesSeleccionadas = mutableStateListOf<String>()
     var biografia by mutableStateOf("")
     var precioMensual by mutableStateOf("")
-    //pensar estos dos datos si meter en la bbdd del entrenador
+
     var aceptarNuevosClientes by mutableStateOf(false)
     var cupoMaximo by mutableStateOf("")
     var diasSeleccionados = mutableStateListOf<String>()
 
-    // Estados para controlar si existe el usuario al registrarse
     var showErrorDialog by mutableStateOf(false)
     var registroExitoso = MutableStateFlow(false)
 
@@ -66,9 +61,6 @@ class RegisterViewModel: ViewModel() {
 
     //Funciones para actualizar los campos
     fun onSexSelected(selectedSex: String) { sex = selectedSex }
-    fun onHeightChanged(it: String) { height = it }
-    fun onWeightChanged(it: String) { weight = it }
-    fun onGoalSelected(it: String) { goal = it }
 
     private val auth : FirebaseAuth = Firebase.auth
     fun finalizarRegistro() {
@@ -89,7 +81,6 @@ class RegisterViewModel: ViewModel() {
                     height = height.toIntOrNull() ?: 0,
                     sex = sex
                 )
-                //llamamos  a la funcion de customer
                 addUserCustomer(user, customer)
                 registroExitoso.value = true
             }
@@ -101,11 +92,9 @@ class RegisterViewModel: ViewModel() {
 
     }
 
-    // Función similar a finalizarRegistro() pero para Entrenadores
     fun finalizarRegistroEntrenador() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener { authResult ->
-                // 1. Creamos el usuario general con rol TRAINER
                 val user = User(
                     passwd = password,
                     name = username,
@@ -114,8 +103,6 @@ class RegisterViewModel: ViewModel() {
                     dateRegister = System.currentTimeMillis().toString()
                 )
 
-                // 2. Creamos el objeto Trainer con los datos que hemos ido recolectando
-                // Convertimos las listas mutables a listas normales (.toList())
                 val trainer = Trainer(
                     biography = biografia,
                     price = price.toDoubleOrNull() ?: 0.0,
@@ -124,10 +111,8 @@ class RegisterViewModel: ViewModel() {
 
                 )
 
-                // 3. Llamamos a tu función existente que ya separa la lógica en Firestore
                 addUserTrainer(user, trainer)
 
-                // 4. Marcamos éxito para que la UI reaccione y navegue
                 registroExitoso.value = true
             }
             .addOnFailureListener { e ->
@@ -139,19 +124,18 @@ class RegisterViewModel: ViewModel() {
     val db = Firebase.firestore
 
 
-    //AÑADIR A LA BBDD un usuario
     fun addUserCustomer(user: User, customer: Customer){
         try {
             val docRef = db.collection(Collections.users)
                 .document()
 
-            val userWithId = user.copy(userId = docRef.id) //si quiero que se guarde el id y asi poder usarlo en el customer
+            val userWithId = user.copy(userId = docRef.id)
             Data.idUser = userWithId.userId
-            docRef.set(userWithId).addOnSuccessListener { // si se añade el usuario, añadimos el cliente
+            docRef.set(userWithId).addOnSuccessListener {
                 Log.d("Ismael", "usuario añadido")
                 // hacemos insert en customer
                 val customerWithId = customer.copy(userId = userWithId.userId)
-                addCustomer(customerWithId) // añadimos el cliente con la id autogenerada del usuario general
+                addCustomer(customerWithId)
             }
                 .addOnFailureListener { e ->
                     Log.e("Ismael", "Error agregando cliente", e)
@@ -162,11 +146,10 @@ class RegisterViewModel: ViewModel() {
         }
     }
 
-    //Añadimos un cliente con el id autogenerado del usuario creado anteriormente (el usuario general)
     fun addCustomer(customer: Customer){
         try {
             db.collection(Collections.customers)
-                .document(customer.userId) // asigna como documento el id del campo userId
+                .document(customer.userId)
                 .set(customer)
             Log.d("Ismael", "cliente añadido")
         } catch (e: Exception) {
@@ -179,13 +162,13 @@ class RegisterViewModel: ViewModel() {
             val docRef = db.collection(Collections.users)
                 .document()
 
-            val userWithId = user.copy(userId = docRef.id) //si quiero que se guarde el id y asi poder usarlo en el customer
+            val userWithId = user.copy(userId = docRef.id)
             Data.idUser = userWithId.userId
-            docRef.set(userWithId).addOnSuccessListener { // si se añade el usuario, añadimos el entrenador
+            docRef.set(userWithId).addOnSuccessListener {
                 Log.d("Ismael", "usuario añadido")
                 // hacemos insert en customer
                 val trainerWithId = trainer.copy(userId = userWithId.userId)
-                addTrainer(trainerWithId) // añadimos el entrenador con la id autogenerada del usuario general
+                addTrainer(trainerWithId)
             }
                 .addOnFailureListener { e ->
                     Log.e("Ismael", "Error agregando entrenador", e)
@@ -199,15 +182,11 @@ class RegisterViewModel: ViewModel() {
     fun addTrainer(trainer: Trainer){
         try {
             db.collection(Collections.trainers)
-                .document(trainer.userId) // asigna como documento el id del campo userId
+                .document(trainer.userId)
                 .set(trainer)
             Log.d("Ismael", "entrenador añadido")
         } catch (e: Exception) {
             Log.e("Ismael", "Error agregando entrenador")
         }
     }
-
-
-
-
 }

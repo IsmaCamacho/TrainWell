@@ -39,7 +39,6 @@ fun TrainerScreenDashboard(navController: NavHostController, username: String) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedFilter by remember { mutableStateOf("Todos") }
 
-    // Listas sencillas de datos inventados (solo Strings)
     val pendingRequests = listOf("Ana García", "Marcos Ruiz", "Elena Sanz")
     val myClients = listOf("Juan Pérez", "María Gómez", "Carlos Ruiz", "Ana Torres")
 
@@ -91,7 +90,7 @@ fun TrainerScreenDashboard(navController: NavHostController, username: String) {
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
             when (selectedTab) {
-                0 -> StartTabContent(pendingRequests, myClients) // Pestaña Inicio con TODO recuperado
+                0 -> StartTabContent(pendingRequests, myClients)
                 1 -> ClientsTabContent(
                     clients = myClients,
                     searchQuery = searchQuery,
@@ -104,16 +103,15 @@ fun TrainerScreenDashboard(navController: NavHostController, username: String) {
     }
 }
 
-// ==========================================
+
 // --- PESTAÑA INICIO COMPLETA ---
-// ==========================================
 @Composable
 fun StartTabContent(requests: List<String>, clients: List<String>) {
     LazyColumn(
         modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        // 1. Tarjetas de Estadísticas (Clients y Pending)
+        // Tarjetas de Estadísticas (Clients y Pending)
         item {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 StatCard("Clients", "24", "+2", Icons.Default.Group, Modifier.weight(1f))
@@ -121,7 +119,7 @@ fun StartTabContent(requests: List<String>, clients: List<String>) {
             }
         }
 
-        // 2. Carrusel Horizontal de Solicitudes Pendientes
+        // Carrusel Horizontal de Solicitudes Pendientes
         item {
             SectionHeader("Pending Requests", "View all")
             LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(vertical = 8.dp)) {
@@ -164,7 +162,7 @@ fun StartTabContent(requests: List<String>, clients: List<String>) {
             }
         }
 
-        // 3. Listado de Mis Clientes (Vista básica de Inicio)
+        // Listado de Mis Clientes
         item { SectionHeader("My clients", null, showAddIcon = true) }
         items(clients) { name ->
             val avatar = if (name.endsWith("z")) R.drawable.ic_men else R.drawable.ic_women
@@ -197,9 +195,7 @@ fun StartTabContent(requests: List<String>, clients: List<String>) {
     }
 }
 
-// ==========================================
 // --- PESTAÑA CLIENTES AVANZADA ---
-// ==========================================
 @Composable
 fun ClientsTabContent(
     clients: List<String>,
@@ -215,7 +211,6 @@ fun ClientsTabContent(
         item { Spacer(modifier = Modifier.height(8.dp)) }
         item { Text("Mis Clientes", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White) }
 
-        // Buscador
         item {
             OutlinedTextField(
                 value = searchQuery,
@@ -321,9 +316,7 @@ fun ClientsTabContent(
     }
 }
 
-// ==========================================
-// --- COMPONENTES AUXILIARES DE SOPORTE ---
-// ==========================================
+// --- COMPONENTES AUXILIARES---
 @Composable
 fun StatCard(title: String, value: String, subValue: String, icon: ImageVector, modifier: Modifier) {
     Card(modifier = modifier, colors = CardDefaults.cardColors(containerColor = CardBackground), shape = RoundedCornerShape(16.dp)) {

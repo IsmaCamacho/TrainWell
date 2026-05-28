@@ -54,8 +54,8 @@ fun ClientScreen9(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 25.dp)
-                .padding(top = 40.dp, bottom = 100.dp), // Espacio para el botón abajo
-            verticalArrangement = Arrangement.SpaceEvenly, // Distribuye el contenido
+                .padding(top = 40.dp, bottom = 100.dp),
+            verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -72,14 +72,14 @@ fun ClientScreen9(
                 contentDescription = "Motivation Image",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(250.dp) // Tamaño controlado para que no desplace el texto
-                    .clip(RoundedCornerShape(15.dp)), // Bordes un poco más redondeados
+                    .height(250.dp)
+                    .clip(RoundedCornerShape(15.dp)),
                 contentScale = ContentScale.Crop
             )
 
             Text(
                 text = "“Focus on the progress; the rest will follow.”",
-                color = colorResource(id = R.color.greenBT), // Color de acento para la cita
+                color = colorResource(id = R.color.greenBT),
                 fontSize = 22.sp,
                 fontStyle = FontStyle.Italic,
                 textAlign = TextAlign.Center,
@@ -87,7 +87,6 @@ fun ClientScreen9(
             )
         }
 
-        // Botón FINALIZAR anclado abajo
         Button(
             onClick = {
                 navController.navigate(Routes.REGISFINAL)

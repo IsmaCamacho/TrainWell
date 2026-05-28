@@ -56,9 +56,7 @@ fun ClientScreen1(
     navm: NavigationViewModel,
     pbvm: ProgressBarViewModel
 ) {
-    //PARA LA BARRA DE PROGRESO
 
-    // val existe by viewModel.usuarioExiste.observeAsState()
     RegistrationLayout(pbvm = pbvm, step = 1, {
         Box(modifier = Modifier.fillMaxSize()){
             Column(
@@ -81,11 +79,9 @@ fun ClientScreen1(
                 WomenCard(isSelected = rvm.sex == "W") { rvm.onSexSelected("W")}
                 OtherCard(isSelected = rvm.sex == "O") { rvm.onSexSelected("O")}
             }
-            //Botón para CONTINUAR
             Button(
                 onClick = {
                         navController.navigate(Routes.REGISTWO)
-                    // navController.navigate(Routes.DASHCLIENT)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -94,10 +90,10 @@ fun ClientScreen1(
                 enabled = rvm.sex.isNotEmpty(),
                 colors = ButtonDefaults.buttonColors(
                     // Color cuando el botón está habilitado
-                    containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton
+                    containerColor = colorResource(id = R.color.greenBT),
                     contentColor = Color.Black,
                     // Color cuando el botón NO está habilitado
-                    disabledContainerColor = colorResource(id = R.color.greenCard), //color de fondo del boton
+                    disabledContainerColor = colorResource(id = R.color.greenCard),
                     disabledContentColor = Color.Black)
             ) {
                 Text("Continue")

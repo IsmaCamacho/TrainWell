@@ -71,11 +71,11 @@ fun ClientScreen8(
                     .height(210.dp)
                     .fillMaxWidth()
                     .padding(vertical = 10.dp),
-                contentScale = ContentScale.Fit //para no deformar la imagen
+                contentScale = ContentScale.Fit
             )
             Spacer(modifier = Modifier.height(10.dp))
 
-            // Lista de niveles de actividad
+
             val nivelesActividad = listOf(
                 "Sedentary",
                 "Lightly active",
@@ -86,7 +86,6 @@ fun ClientScreen8(
             nivelesActividad.forEach { nivel ->
                 OutlinedButton(
                     onClick = {
-                        // Aquí podrías guardar el nivel en tu rvm (RegisterViewModel)
                         navController.navigate(Routes.REGISNINE)
                     },
                     modifier = Modifier.fillMaxWidth(),

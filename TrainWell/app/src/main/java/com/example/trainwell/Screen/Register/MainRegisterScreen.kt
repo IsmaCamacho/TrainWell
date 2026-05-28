@@ -55,22 +55,22 @@ import androidx.navigation.NavHostController
 import com.example.trainwell.R
 import com.example.trainwell.Routes
 
-@SuppressLint("ResourceAsColor") //se ha añadido al agregar el color al boton
+@SuppressLint("ResourceAsColor")
 @Composable
 fun Register(
     navController: NavHostController
 ) {
     var role by remember { mutableStateOf("") }
 
-    //tod dentro de un box para que ocupe la pantalla entera
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        colorResource(id = R.color.greenBG2), //verde mas clarito
-                        colorResource(id = R.color.greenBG) // verde mas oscuro
+                        colorResource(id = R.color.greenBG2),
+                        colorResource(id = R.color.greenBG)
                     )
                 )
             )
@@ -81,21 +81,20 @@ fun Register(
             contentScale = ContentScale.FillHeight,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(450.dp) // Ajusta según tu diseño
+                .height(450.dp)
                 .graphicsLayer { alpha = 0.99f }
                 .drawWithContent {
                     drawContent()
                     drawRect(
                         brush = Brush.verticalGradient(
-                            // INVERTIMOS: Sólido arriba (Blanco/Negro) y Transparente abajo
                             colors = listOf(
-                                Color.Black,       // Parte superior (se ve la imagen)
-                                Color.Transparent  // Parte inferior (se difumina)
+                                Color.Black,
+                                Color.Transparent
                             ),
-                            startY = size.height * 0.5f, // Empezamos a difuminar a la mitad
-                            endY = size.height           // Terminamos en el borde inferior
+                            startY = size.height * 0.5f,
+                            endY = size.height
                         ),
-                        blendMode = BlendMode.DstIn // Aplica la transparencia del brush a la imagen
+                        blendMode = BlendMode.DstIn
                     )
                 }
         )
@@ -126,7 +125,7 @@ fun Register(
             }
             Spacer(modifier = Modifier.size(20.dp))
             Row {
-                ElevatedButton(onClick = {  //elevated button visto en la pagina de jetpack compose
+                ElevatedButton(onClick = {
                     when (role) {
                         "C" -> {
                             Log.e("sergio", "en el boton continue, has pulsado en client")
@@ -140,7 +139,7 @@ fun Register(
                     }
                 },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton
+                        containerColor = colorResource(id = R.color.greenBT),
                         contentColor = Color.Black)
                 ) {
                     Text(text = "Continue")
@@ -161,7 +160,7 @@ fun Register(
                 )
                 TextButton(
                     onClick = {
-                        navController.navigate(Routes.login) //irse al formulario de registro
+                        navController.navigate(Routes.login)
                     }
                 ) {
                     Text(
@@ -222,13 +221,6 @@ fun ClientCard(isSelected:Boolean, onClick: () -> Unit) {
                     fontSize = 13.sp
                 )
             }
-//            //Icono de Check circular (igual que una imagen pero se pone como icono)
-//            Icon(
-//                painter = painterResource(id = if (isSelected) R.drawable.ic_check_sin else R.drawable.ic_check_con),
-//                contentDescription = null,
-//                tint = if (isSelected) colorResource(id = R.color.greenBT) else Color.Gray,
-//                modifier = Modifier.size(20.dp)
-//            )
         }
     }
 
@@ -279,13 +271,6 @@ fun TrainerCard(isSelected:Boolean,onClick: () -> Unit) {
                     fontSize = 13.sp
                 )
             }
-//            //Icono de Check circular (igual que una imagen pero se pone como icono)
-//            Icon(
-//                painter = painterResource(id = if (isSelected) R.drawable.ic_check_sin else R.drawable.ic_check_con),
-//                contentDescription = null,
-//                tint = if (isSelected) colorResource(id = R.color.greenBT) else Color.Gray,
-//                modifier = Modifier.size(20.dp)
-//            )
         }
     }
 }

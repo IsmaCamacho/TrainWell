@@ -84,7 +84,6 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
             navController.navigate(Routes.DASHCLIENT) {
                 popUpTo(Routes.REGISFINAL) { inclusive = true }
             }
-            // Resetear el estado para que no vuelva a navegar al entrar de nuevo
             rvm.registroExitoso.value = false
         }
     }
@@ -95,8 +94,8 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        colorResource(id = R.color.greenBG2), //verde mas clarito
-                        colorResource(id = R.color.greenBG) // verde mas oscuro
+                        colorResource(id = R.color.greenBG2),
+                        colorResource(id = R.color.greenBG)
                     )
                 )
             )
@@ -107,21 +106,21 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
             contentScale = ContentScale.FillHeight,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(450.dp) // Ajusta según tu diseño
+                .height(450.dp)
                 .graphicsLayer { alpha = 0.99f }
                 .drawWithContent {
                     drawContent()
                     drawRect(
                         brush = Brush.verticalGradient(
-                            // INVERTIMOS: Sólido arriba (Blanco/Negro) y Transparente abajo
+
                             colors = listOf(
-                                Color.Black,       // Parte superior (se ve la imagen)
-                                Color.Transparent  // Parte inferior (se difumina)
+                                Color.Black,
+                                Color.Transparent
                             ),
-                            startY = size.height * 0.5f, // Empezamos a difuminar a la mitad
-                            endY = size.height           // Terminamos en el borde inferior
+                            startY = size.height * 0.5f,
+                            endY = size.height
                         ),
-                        blendMode = BlendMode.DstIn // Aplica la transparencia del brush a la imagen
+                        blendMode = BlendMode.DstIn
                     )
                 }
         )
@@ -147,9 +146,9 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
                 },
                 label = { Text(text= "Username", color = colorResource(id=R.color.greyTXT)) },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,   // Color mientras escribe
-                    unfocusedTextColor = Color.White, // Color cuando no está seleccionado
-                    cursorColor = Color.White ,        // Color de la barra de escritura
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    cursorColor = Color.White ,
                     errorTextColor = Color.White
                 ),
                 isError = usernameError,
@@ -175,9 +174,9 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
                 label = { Text(text= "Email", color = colorResource(id=R.color.greyTXT)) },
                 isError = emailError,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,   // Color mientras escribe
-                    unfocusedTextColor = Color.White, // Color cuando no está seleccionado
-                    cursorColor = Color.White,         // Color de la barra de escritura
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    cursorColor = Color.White,
                     errorTextColor = Color.White
                 ),
                 modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
@@ -203,9 +202,9 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
                 isError = passwdError,
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,   // Color mientras escribe
-                    unfocusedTextColor = Color.White, // Color cuando no está seleccionado
-                    cursorColor = Color.White,         // Color de la barra de escritura
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    cursorColor = Color.White,
                     errorTextColor = Color.White
                 ),
                 singleLine = true,
@@ -235,14 +234,6 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
                     style = MaterialTheme.typography.bodySmall
                 )
             }
-            //si no existe, texto de que se ha equivocado en el login
-//            if (existe == false) {
-//                Text(
-//                    text = "Incorrect email or password",
-//                    color = MaterialTheme.colorScheme.error,
-//                    modifier = Modifier.padding(top = 12.dp)
-//                )
-//            }
 
             //Botón para enviar
             ElevatedButton(
@@ -253,7 +244,7 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
                         emailError = false
                         passwdError = false
 
-                        rvm.finalizarRegistro()  //lo añade a la bbdd
+                        rvm.finalizarRegistro()
 
                     } else {
                         usernameError = rvm.username.isBlank()
@@ -265,10 +256,10 @@ fun ClientScreenFinal(navController: NavHostController, rvm: RegisterViewModel) 
                 enabled = rvm.username.isNotBlank() && rvm.email.isNotBlank() && rvm.password.isNotBlank(),
                 colors = ButtonDefaults.buttonColors(
                     // Color cuando el botón está habilitado
-                    containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton
+                    containerColor = colorResource(id = R.color.greenBT),
                     contentColor = Color.Black,
                     // Color cuando el botón NO está habilitado
-                    disabledContainerColor = colorResource(id = R.color.greenCard), //color de fondo del boton
+                    disabledContainerColor = colorResource(id = R.color.greenCard),
                     disabledContentColor = Color.Black)
             ) {
                 Text("Create Account")
@@ -315,7 +306,7 @@ fun BtGoogle(onClick: () -> Unit) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_google), //logo descargado
+                painter = painterResource(id = R.drawable.ic_google),
                 contentDescription = "Google Logo",
                 tint = Color.Unspecified,
                 modifier = Modifier.size(18.dp)
@@ -334,7 +325,7 @@ fun BtFacebook(onClick: () -> Unit) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_facebook), //logo descargado
+                painter = painterResource(id = R.drawable.ic_facebook),
                 contentDescription = "Facebook Logo",
                 tint = Color.Unspecified,
                 modifier = Modifier.size(18.dp)

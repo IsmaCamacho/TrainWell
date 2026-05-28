@@ -64,7 +64,7 @@ fun ClientScreen3(navController: NavHostController, pbvm: ProgressBarViewModel, 
                 Text(text = "How tall are you?", color = Color.White, fontSize = 30.sp)
             }
             Column(
-                modifier = Modifier.align(Alignment.Center), // Centra el bloque en el box
+                modifier = Modifier.align(Alignment.Center),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -76,7 +76,7 @@ fun ClientScreen3(navController: NavHostController, pbvm: ProgressBarViewModel, 
                     OutlinedTextField(
                         value = rvm.height,
                         onValueChange = {
-                            if (it.length <= 3) //para que no deje escribir mas de 2 cifras
+                            if (it.length <= 3)
                                 rvm.height = it
                             alturaError = it.isBlank() || it.toIntOrNull() == null
                         },
@@ -91,12 +91,12 @@ fun ClientScreen3(navController: NavHostController, pbvm: ProgressBarViewModel, 
                         modifier = Modifier.width(120.dp)
                     )
                 }
-                // SELECTOR DE UNIDADES (cm / pulgadas) BUSCADO (OPCION DE QUITAR)
+                // SELECTOR DE UNIDADES (cm / pulgadas)
                 Spacer(modifier = Modifier.height(14.dp))
                 Row(
                     modifier = Modifier
                         .clip(RoundedCornerShape(25.dp))
-                        .background(colorResource(id = R.color.greenCard)) // Fondo oscuro/gris
+                        .background(colorResource(id = R.color.greenCard))
                         .padding(4.dp)
                 ) {
                     UnitOption(
@@ -133,10 +133,10 @@ fun ClientScreen3(navController: NavHostController, pbvm: ProgressBarViewModel, 
                 enabled = rvm.height.isNotEmpty() && rvm.height.toDoubleOrNull() != null,
                 colors = ButtonDefaults.buttonColors(
                     // Color cuando el botón está habilitado
-                    containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton
+                    containerColor = colorResource(id = R.color.greenBT),
                     contentColor = Color.Black,
                     // Color cuando el botón NO está habilitado
-                    disabledContainerColor = colorResource(id = R.color.greenCard), //color de fondo del boton
+                    disabledContainerColor = colorResource(id = R.color.greenCard),
                     disabledContentColor = Color.Black
                 )
             ) {

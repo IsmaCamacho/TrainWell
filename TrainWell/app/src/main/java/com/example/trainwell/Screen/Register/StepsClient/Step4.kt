@@ -64,7 +64,7 @@ fun ClientScreen4(navController: NavHostController, pbvm: ProgressBarViewModel, 
                 Text(text = "How much do you weigh?", color = Color.White, fontSize = 30.sp)
             }
             Column(
-                modifier = Modifier.align(Alignment.Center), // Centra este bloque en el Box
+                modifier = Modifier.align(Alignment.Center),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -76,7 +76,7 @@ fun ClientScreen4(navController: NavHostController, pbvm: ProgressBarViewModel, 
                     OutlinedTextField(
                         value = rvm.weight,
                         onValueChange = {
-                            if (it.length <= 3) //para que no deje escribir mas de 2 cifras
+                            if (it.length <= 3)
                                 rvm.weight = it
                             pesoError = it.isBlank() || it.toDoubleOrNull() == null
                         },
@@ -91,12 +91,12 @@ fun ClientScreen4(navController: NavHostController, pbvm: ProgressBarViewModel, 
                         modifier = Modifier.width(120.dp)
                     )
                 }
-                // SELECTOR DE UNIDADES (kg / lbl) BUSCADO (OPCION DE QUITAR)
+                // SELECTOR DE UNIDADES (kg / lbl)
                 Spacer(modifier = Modifier.height(14.dp))
                 Row(
                     modifier = Modifier
                         .clip(RoundedCornerShape(25.dp))
-                        .background(colorResource(id = R.color.greenCard)) // Fondo oscuro/gris
+                        .background(colorResource(id = R.color.greenCard))
                         .padding(4.dp)
                 ) {
                     UnitOptionPeso(
@@ -133,10 +133,10 @@ fun ClientScreen4(navController: NavHostController, pbvm: ProgressBarViewModel, 
                 enabled = rvm.weight.isNotEmpty() && rvm.weight.toDoubleOrNull() != null,
                 colors = ButtonDefaults.buttonColors(
                     // Color cuando el botón está habilitado
-                    containerColor = colorResource(id = R.color.greenBT), //color de fondo del boton
+                    containerColor = colorResource(id = R.color.greenBT),
                     contentColor = Color.Black,
                     // Color cuando el botón NO está habilitado
-                    disabledContainerColor = colorResource(id = R.color.greenCard), //color de fondo del boton
+                    disabledContainerColor = colorResource(id = R.color.greenCard),
                     disabledContentColor = Color.Black
                 )
             ) {

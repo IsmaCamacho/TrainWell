@@ -115,18 +115,18 @@ fun ClientDashboardScreen(navController: NavHostController, username: String) {
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            // 1. TARJETA DE PROGRESO SEMANAL
+            // TARJETA DE PROGRESO SEMANAL
             item {
                 WeeklyProgressCard()
             }
 
-            // 2. TU PLAN DE HOY
+            // TU PLAN DE HOY
             item {
                 SectionHeader(title = "Tu Plan de Hoy", actionText = "Ver calendario")
                 TodayWorkoutCard()
             }
 
-            // 3. ACCIONES RÁPIDAS
+            // ACCIONES RÁPIDAS
             item {
                 Text("Acciones Rápidas", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 Spacer(Modifier.height(12.dp))
@@ -142,8 +142,7 @@ fun ClientDashboardScreen(navController: NavHostController, username: String) {
                 }
             }
 
-            // 4. ENTRENADORES DESTACADOS
-            // 4. ENTRENADORES DESTACADOS
+            // ENTRENADORES DESTACADOS
             item {
                 SectionHeader(title = "Entrenadores Destacados", actionText = "Ver todos")
                 LazyRow(
@@ -197,7 +196,7 @@ fun WeeklyProgressCard() {
                     drawArc(
                         brush = Brush.sweepGradient(listOf(Color(0xFF004D1A), PrimaryGreen)),
                         startAngle = -90f,
-                        sweepAngle = 280f, // 80% de 360
+                        sweepAngle = 280f,
                         useCenter = false,
                         style = Stroke(12.dp.toPx(), cap = StrokeCap.Round)
                     )
@@ -241,14 +240,12 @@ fun TodayWorkoutCard() {
     ) {
         Column {
             Box(modifier = Modifier.height(180.dp).fillMaxWidth()) {
-                // Imagen de fondo del ejercicio
                 Image(
                     painter = painterResource(id = R.drawable.ic_loginimage),
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
-                // Badge "Día 12"
                 Surface(
                     color = Color.Black.copy(alpha = 0.7f),
                     modifier = Modifier.align(Alignment.TopEnd).padding(12.dp),
@@ -313,7 +310,6 @@ fun FeaturedCoachItem(nombre: String, especialidad: String, image: Int) {
             .clip(RoundedCornerShape(16.dp))
             .background(Color.DarkGray)
         ) {
-            // Imagen Real con Coil
             AsyncImage(
                 model = image,
                 contentDescription = nombre,
@@ -323,7 +319,6 @@ fun FeaturedCoachItem(nombre: String, especialidad: String, image: Int) {
                 error = painterResource(id = android.R.drawable.ic_menu_report_image)
             )
 
-            // Badge Pro
             Surface(
                 color = PrimaryGreen,
                 modifier = Modifier.align(Alignment.BottomStart).padding(8.dp),
